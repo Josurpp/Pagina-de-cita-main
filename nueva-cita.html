@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Citas Médicas</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="brand">
+        <h1>Sistema de Citas Médicas</h1>
+    </div>
+
+    <div class="user-actions">
+        <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
+        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
+    </div>
+</header>
+
+<aside class="sidebar">
+    <nav class="main-nav">
+        <a href="nueva-cita.html">Nueva Cita</a>
+        <a href="mis-citas.html">Mis Citas</a>
+        <a href="agenda-medica.html">Agenda Médica</a>
+    </nav>
+</aside>
+
+<div class="container">
+
+<h2>Nueva Cita Médica</h2>
+
+<label>Especialidad</label>
+<select id="especialidad">
+<option value="">Seleccione</option>
+</select>
+
+<label>Médico</label>
+<select id="medico">
+<option value="">Seleccione</option>
+</select>
+
+<label>Fecha</label>
+<input type="date" id="fecha">
+
+<label>Hora</label>
+<select id="hora">
+<option>08:00</option>
+<option>08:30</option>
+<option>09:00</option>
+<option>09:30</option>
+<option>10:00</option>
+<option>10:30</option>
+</select>
+
+<button onclick="agendar()">Agendar Cita</button>
+
+</div>
+
+<script>
+
+const especialidades = [
+"Cardiología",
+"Pediatría",
+"Dermatología",
+"Medicina General"
+];
+
+const medicos = [
+    { id: 1, nombre: "Dr. Pérez", especialidad: "Cardiología", estado: "Activo" },
+    { id: 2, nombre: "Dra. Gómez", especialidad: "Cardiología", estado: "Activo" },
+    { id: 3, nombre: "Dr. Morales", especialidad: "Cardiología", estado: "Activo" },
+    { id: 4, nombre: "Dra. Sánchez", especialidad: "Cardiología", estado: "Activo" },
+
+    { id: 5, nombre: "Dr. Rodríguez", especialidad: "Pediatría", estado: "Activo" },
+    { id: 6, nombre: "Dra. Ruiz", especialidad: "Pediatría", estado: "Activo" },
+    { id: 7, nombre: "Dra. Fernández", especialidad: "Pediatría", estado: "Activo" },
+
+    { id: 8, nombre: "Dr. Torres", especialidad: "Dermatología", estado: "Activo" },
+    { id: 9, nombre: "Dra. Álvarez", especialidad: "Dermatología", estado: "Activo" },
+    { id: 10, nombre: "Dr. Castillo", especialidad: "Dermatología", estado: "Activo" },
+
+    { id: 11, nombre: "Dr. López", especialidad: "Medicina General", estado: "Activo" },
+    { id: 12, nombre: "Dra. Martínez", especialidad: "Medicina General", estado: "Activo" },
+    { id: 13, nombre: "Dr. Herrera", especialidad: "Medicina General", estado: "Activo" }
+];
+
+let citas = JSON.parse(localStorage.getItem('citas') || '[]');
+
+const especialidadSelect =
+document.getElementById("especialidad");
+
+especialidades.forEach(e=>{
+let option=document.createElement("option");
+option.text=e;
+option.value=e;
+especialidadSelect.add(option);
+});
+
+especialidadSelect.addEventListener("change",()=>{
+
+const esp=especialidadSelect.value;
+
+const medicoSelect =
+document.getElementById("medico");
+
+medicoSelect.innerHTML=
+'<option value="">Seleccione</option>';
+
+medicos
+.filter(m=>m.especialidad===esp &&
+m.estado==="Activo")
+.forEach(m=>{
+
+let option=document.createElement("option");
+
+option.value=m.id;
+
+option.text=m.nombre;
+
+medicoSelect.add(option);
+
+});
+
+});
+
+function agendar(){
+
+const medicoId=
+document.getElementById("medico").value;
+
+const fecha=
+document.getElementById("fecha").value;
+
+const hora=
+document.getElementById("hora").value;
+
+if(!medicoId || !fecha){
+alert("Complete todos los campos");
+return;
+}
+
+const hoy = new Date();
+const fechaSeleccionada = new Date(fecha);
+
+if(fechaSeleccionada < hoy.setHours(0,0,0,0)){
+alert("Fecha inválida");
+return;
+}
+
+const citasDia =
+citas.filter(c=>c.fecha===fecha);
+
+if(citasDia.length>=2){
+alert("Máximo 2 citas por día");
+return;
+}
+
+const existeTraslape =
+citas.some(c=>
+c.fecha===fecha &&
+c.hora===hora
+);
+
+if(existeTraslape){
+alert("Ya tiene una cita en ese horario");
+return;
+}
+
+const medico=
+medicos.find(
+m=>m.id==medicoId
+);
+
+citas.push({
+medico:medico.nombre,
+especialidad:medico.especialidad,
+fecha,
+hora,
+estado:"Programada"
+});
+
+    localStorage.setItem('citas', JSON.stringify(citas));
+const tbody=
+document.getElementById("tablaCitas");
+if (!tbody) return;
+
+tbody.innerHTML="";
+
+citas.sort((a,b)=>
+new Date(a.fecha)-new Date(b.fecha)
+);
+
+citas.forEach(c=>{
+
+tbody.innerHTML+=`
+<tr>
+<td>${c.medico}</td>
+<td>${c.especialidad}</td>
+<td>${c.fecha}</td>
+<td>${c.hora}</td>
+<td>${c.estado}</td>
+</tr>
+`;
+
+});
+
+}
+
+</script>
+<script>
+function updateUserActions() {
+    const perfilLink = document.getElementById("linkPerfil");
+    const logoutLink = document.getElementById("linkSalir");
+    const logged = localStorage.getItem("logueado") === "si";
+    if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
+    if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+}
+updateUserActions();
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Citas</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="brand">
+        <h1>Sistema de Citas Médicas</h1>
+    </div>
+
+    <div class="user-actions">
+        <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
+        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
+    </div>
+</header>
+
+<aside class="sidebar">
+    <nav class="main-nav">
+        <a href="nueva-cita.html">Nueva Cita</a>
+        <a href="mis-citas.html">Mis Citas</a>
+        <a href="agenda-medica.html">Agenda Médica</a>
+    </nav>
+</aside>
+
+<!-- MIS CITAS -->
+<div class="container" id="misCitas">
+
+    <h1>Mis Citas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Estado</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tablaCitas">
+        </tbody>
+    </table>
+
+    <p id="sinCitas" class="no-citas" style="display:none; margin-top:20px; color:#555;">No hay citas programadas.</p>
+
+</div>
+
+<!-- DETALLE DE CITA -->
+<div class="container" id="detalleCita" style="display:none;">
+
+    <h1>Detalle de Cita</h1>
+
+    <p><strong>Paciente:</strong> <span id="detallePaciente"></span></p>
+    <p><strong>Médico:</strong> <span id="detalleMedico"></span></p>
+    <p><strong>Especialidad:</strong> <span id="detalleEspecialidad"></span></p>
+    <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
+    <p><strong>Hora:</strong> <span id="detalleHora"></span></p>
+    <p><strong>Estado:</strong> <span id="detalleEstado"></span></p>
+    <p id="detalleMotivo" style="display:none;"><strong>Motivo:</strong> <span id="detalleMotivoText"></span></p>
+
+    <div class="acciones">
+        <button class="btn-danger" onclick="mostrarCancelar()">Cancelar Cita</button>
+        <button onclick="volverMisCitas()">Volver</button>
+    </div>
+
+</div>
+
+<!-- CANCELAR CITA -->
+<div class="container" id="cancelarCita" style="display:none;">
+
+    <h1>Cancelar Cita</h1>
+
+    <label><strong>Motivo (Opcional)</strong></label>
+    <textarea id="motivoCancelacion" rows="4" placeholder="Escriba el motivo de la cancelación"></textarea>
+
+    <div class="acciones">
+        <button class="btn-danger" onclick="confirmarCancelacion()">Confirmar Cancelación</button>
+        <button onclick="volverDetalle()">Volver</button>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+const citas = JSON.parse(localStorage.getItem('citas') || '[]');
+let citaSeleccionada = null;
+let justCancelled = false;
+
+function guardarCitas() {
+    localStorage.setItem('citas', JSON.stringify(citas));
+}
+
+function estadoClass(estado) {
+    if (estado === 'Atendida') return 'status-atendida';
+    if (estado === 'Cancelada') return 'status-cancelada';
+    return 'status-programada';
+}
+
+function mostrarCitas() {
+    const tbody = document.getElementById('tablaCitas');
+    const sinCitas = document.getElementById('sinCitas');
+
+    tbody.innerHTML = '';
+
+    if (citas.length === 0) {
+        sinCitas.style.display = 'block';
+        return;
+    }
+
+    sinCitas.style.display = 'none';
+    citas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+    citas.forEach((c, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${c.fecha}</td>
+                <td>${c.hora}</td>
+                <td>${c.medico}</td>
+                <td>${c.especialidad}</td>
+                <td class="${estadoClass(c.estado)}">${c.estado}</td>
+                <td><button onclick="mostrarDetalle(${index})">Detalle</button></td>
+            </tr>
+        `;
+    });
+}
+
+function mostrarDetalle(index) {
+    citaSeleccionada = index;
+    const cita = citas[index];
+    if (!cita) return;
+
+    const nombrePaciente = localStorage.getItem('nombre') || 'Paciente';
+    document.getElementById('detallePaciente').textContent = nombrePaciente;
+    document.getElementById('detalleMedico').textContent = cita.medico;
+    document.getElementById('detalleEspecialidad').textContent = cita.especialidad;
+    document.getElementById('detalleFecha').textContent = cita.fecha;
+    document.getElementById('detalleHora').textContent = cita.hora;
+    document.getElementById('detalleEstado').textContent = cita.estado;
+    // mostrar motivo si existe y la cita está cancelada
+    const motivoEl = document.getElementById('detalleMotivo');
+    const motivoText = document.getElementById('detalleMotivoText');
+    if (cita.estado === 'Cancelada' && cita.motivo) {
+        motivoText.textContent = cita.motivo;
+        motivoEl.style.display = 'block';
+    } else {
+        motivoText.textContent = '';
+        motivoEl.style.display = 'none';
+    }
+
+    document.getElementById('misCitas').style.display = 'none';
+    document.getElementById('detalleCita').style.display = 'block';
+    document.getElementById('cancelarCita').style.display = 'none';
+}
+
+function mostrarCancelar() {
+    if (citaSeleccionada === null) return;
+    const cita = citas[citaSeleccionada];
+    if (!cita) return;
+    if (cita.estado === 'Cancelada') {
+        alert('Esta cita ya fue cancelada');
+        return;
+    }
+    const confirmar = confirm('¿Está seguro de que desea cancelar esta cita? Esta acción no se puede deshacer.');
+    if (!confirmar) return;
+    // limpiar motivo previo y mostrar formulario de cancelación
+    const motivoEl = document.getElementById('motivoCancelacion');
+    if (motivoEl) motivoEl.value = '';
+    document.getElementById('detalleCita').style.display = 'none';
+    document.getElementById('cancelarCita').style.display = 'block';
+}
+
+function volverMisCitas() {
+    document.getElementById('detalleCita').style.display = 'none';
+    document.getElementById('cancelarCita').style.display = 'none';
+    document.getElementById('misCitas').style.display = 'block';
+    if (justCancelled) {
+        alert('Esta cita fue cancelada');
+        justCancelled = false;
+    }
+}
+
+function volverDetalle() {
+    document.getElementById('cancelarCita').style.display = 'none';
+    document.getElementById('detalleCita').style.display = 'block';
+}
+
+function confirmarCancelacion() {
+    if (citaSeleccionada === null) return;
+    const cita = citas[citaSeleccionada];
+    if (!cita) return;
+    if (cita.estado === 'Cancelada') {
+        alert('Esta cita ya fue cancelada');
+        // regresar al detalle sin hacer cambios
+        volverDetalle();
+        return;
+    }
+    const motivo = document.getElementById('motivoCancelacion').value.trim();
+    citas[citaSeleccionada].estado = 'Cancelada';
+    citas[citaSeleccionada].motivo = motivo;
+    guardarCitas();
+    mostrarCitas();
+    alert('Cita cancelada exitosamente');
+    justCancelled = true;
+    volverMisCitas();
+}
+
+mostrarCitas();
+</script>
+<script>
+function updateUserActions() {
+    const perfilLink = document.getElementById("linkPerfil");
+    const logoutLink = document.getElementById("linkSalir");
+    const logged = localStorage.getItem("logueado") === "si";
+    if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
+    if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+}
+updateUserActions();
+</script>
+
+</body>
+</html>
