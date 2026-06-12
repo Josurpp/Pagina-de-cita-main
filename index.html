@@ -30,7 +30,6 @@
 
     <div class="user-actions">
         <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
-        <a id="linkAdmin" href="admin-login.html" class="btn-admin">Panel Admin</a>
         <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
     </div>
 </header>
@@ -86,13 +85,9 @@
 function updateUserActions() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
-    const adminLink = document.getElementById("linkAdmin");
     const logged = localStorage.getItem("logueado") === "si";
-    const adminLogueado = localStorage.getItem("adminLogueado") === "si";
-    
     if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
     if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
-    if (adminLink) adminLink.style.display = "inline-block";
 }
 
 function irA(dest) {
