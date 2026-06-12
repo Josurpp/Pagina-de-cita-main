@@ -55,6 +55,15 @@ header .btn-logout{
     border:1px solid rgba(255,255,255,0.6);
 }
 
+header .btn-admin{
+    background:rgba(227, 57, 53, 0.9);
+    padding:8px 15px;
+}
+
+header .btn-admin:hover{
+    background:#d32f2f;
+}
+
 aside.sidebar{
     background:#1e88e5;
     color:white;
