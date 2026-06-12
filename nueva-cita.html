@@ -173,15 +173,32 @@ medicos.find(
 m=>m.id==medicoId
 );
 
-citas.push({
-medico:medico.nombre,
-especialidad:medico.especialidad,
-fecha,
-hora,
-estado:"Programada"
-});
+const dniUsuario = localStorage.getItem('dni') || 'anonimo';
+const nombreUsuario = localStorage.getItem('nombre') || 'Paciente';
 
-    localStorage.setItem('citas', JSON.stringify(citas));
+const cita = {
+    dni: dniUsuario,
+    paciente: nombreUsuario,
+    medico: medico.nombre,
+    especialidad: medico.especialidad,
+    fecha,
+    hora,
+    estado: "Programada"
+};
+
+citas.push(cita);
+localStorage.setItem('citas', JSON.stringify(citas));
+
+const logged = localStorage.getItem("logueado") === "si";
+if (!logged) {
+    localStorage.setItem('pendingCita', JSON.stringify(cita));
+    alert("Cita agendada. Ahora inicia sesión para continuar.");
+    window.location.href = "perfil.html";
+    return;
+}
+
+alert("Cita agendada correctamente.");
+window.location.href = "mis-citas.html";
 const tbody=
 document.getElementById("tablaCitas");
 if (!tbody) return;

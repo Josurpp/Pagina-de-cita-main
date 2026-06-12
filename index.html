@@ -91,11 +91,6 @@ function updateUserActions() {
 }
 
 function irA(dest) {
-    const logged = localStorage.getItem("logueado") === "si";
-    if (!logged) {
-        alert("Debes iniciar seccion primero");
-        return;
-    }
     window.location.href = dest;
 }
 

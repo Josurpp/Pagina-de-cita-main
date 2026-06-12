@@ -89,12 +89,18 @@
 </div>
 
 <script>
-const citas = JSON.parse(localStorage.getItem('citas') || '[]');
+const todasLasCitas = JSON.parse(localStorage.getItem('citas') || '[]');
+const dniActual = localStorage.getItem('dni');
+const citas = todasLasCitas.filter(c => c.dni === dniActual);
 let citaSeleccionada = null;
 let justCancelled = false;
 
 function guardarCitas() {
-    localStorage.setItem('citas', JSON.stringify(citas));
+    const todasLasCitas = JSON.parse(localStorage.getItem('citas') || '[]');
+    const dniActual = localStorage.getItem('dni');
+    const citasOtros = todasLasCitas.filter(c => c.dni !== dniActual);
+    const citasActualizadas = [...citasOtros, ...citas];
+    localStorage.setItem('citas', JSON.stringify(citasActualizadas));
 }
 
 function estadoClass(estado) {

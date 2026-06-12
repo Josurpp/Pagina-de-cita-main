@@ -60,10 +60,8 @@
 </div>
 
 
-<button onclick="registrar()">
-    Registrarse
-</button>
-
+<button onclick="registrar()">Registrarse</button>
+<p id="mensajeError" class="error-message" style="margin-top: 10px; color: #d32f2f; display: none;"></p>
 
 </div>
 
@@ -79,14 +77,37 @@ updateUserActions();
 </script>
 
 <script>
-function registrar() {
+function mostrarError(mensaje) {
+    const errorDiv = document.getElementById('mensajeError');
+    errorDiv.textContent = mensaje;
+    errorDiv.style.display = 'block';
+}
 
-    let nombre = document.getElementById("nombre").value;
-    let dni = document.getElementById("dni").value;
-    let password = document.getElementById("password").value;
+function ocultarError() {
+    const errorDiv = document.getElementById('mensajeError');
+    errorDiv.style.display = 'none';
+}
+
+function registrar() {
+    ocultarError();
+    
+    let nombre = document.getElementById("nombre").value.trim();
+    let dni = document.getElementById("dni").value.trim();
+    let password = document.getElementById("password").value.trim();
 
     if(nombre === "" || dni === "" || password === ""){
-        alert("Complete todos los campos");
+        mostrarError("⚠️ Completa todos los campos");
+        return;
+    }
+
+    if(dni.length !== 8 || isNaN(dni)){
+        mostrarError("❌ El DNI debe tener exactamente 8 dígitos numéricos");
+        return;
+    }
+
+    let dniRegistrado = localStorage.getItem("dni");
+    if(dniRegistrado === dni){
+        mostrarError("❌ Este DNI ya está registrado. Intenta con otro o inicia sesión");
         return;
     }
 
@@ -94,7 +115,7 @@ function registrar() {
     localStorage.setItem("dni", dni);
     localStorage.setItem("password", password);
 
-    alert("Registro exitoso");
+    alert("✅ Registro exitoso. Bienvenido " + nombre);
 
     window.location.href = "perfil.html";
 }

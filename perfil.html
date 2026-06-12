@@ -55,31 +55,84 @@
 
     <button onclick="iniciarSesion()">Ingresar</button>
     <button onclick="window.open('registro.html', '_self')">Registrar</button>
+    <p id="mensajeError" class="error-message" style="margin-top: 10px; color: #d32f2f; display: none;"></p>
+    <p id="mensajePendiente" class="info-message" style="margin-top: 10px; color: #333;"></p>
 
 
 </div>
 <script>
+function mostrarError(mensaje) {
+    const errorDiv = document.getElementById('mensajeError');
+    errorDiv.textContent = mensaje;
+    errorDiv.style.display = 'block';
+}
+
+function ocultarError() {
+    const errorDiv = document.getElementById('mensajeError');
+    errorDiv.style.display = 'none';
+}
+
 function iniciarSesion() {
+    ocultarError();
+    
+    let dni = document.getElementById("dni").value.trim();
+    let password = document.getElementById("password").value.trim();
 
-    let dni = document.getElementById("dni").value;
-    let password = document.getElementById("password").value;
-
-    let dniRegistrado = localStorage.getItem("dni");
-    let passwordRegistrada = localStorage.getItem("password");
-
-    if(dniRegistrado === null || passwordRegistrada === null){
-        alert("No existe una cuenta registrada. Regístrate si aún no tienes una cuenta.");
+    if(dni === "" || password === ""){
+        mostrarError("⚠️ Completa todos los campos");
         return;
     }
 
-    if(dni === dniRegistrado && password === passwordRegistrada){
-        localStorage.setItem("logueado", "si");
-        alert("Inicio de sesión exitoso");
-        window.location.href = "nueva-cita.html";
+    if(dni.length !== 8 || isNaN(dni)){
+        mostrarError("❌ El DNI debe tener exactamente 8 dígitos numéricos");
+        return;
+    }
+
+    let dniRegistrado = localStorage.getItem("dni");
+    let passwordRegistrada = localStorage.getItem("password");
+    let pendingCita = JSON.parse(localStorage.getItem('pendingCita') || 'null');
+
+    if(dniRegistrado === null || passwordRegistrada === null){
+        mostrarError("❌ Esta cuenta no existe. Regístrate para crear una nueva");
+        return;
+    }
+
+    if(dni !== dniRegistrado){
+        mostrarError("❌ DNI incorrecto");
+        return;
+    }
+
+    if(password !== passwordRegistrada){
+        mostrarError("❌ Contraseña incorrecta");
+        return;
+    }
+
+    localStorage.setItem("logueado", "si");
+    if (pendingCita) {
+        const nombreUsuario = localStorage.getItem('nombre') || 'Paciente';
+        pendingCita.dni = dni;
+        pendingCita.paciente = nombreUsuario;
+        let citasActuales = JSON.parse(localStorage.getItem('citas') || '[]');
+        citasActuales.push(pendingCita);
+        localStorage.setItem('citas', JSON.stringify(citasActuales));
+        localStorage.removeItem('pendingCita');
+        alert("✅ Inicio de sesión exitoso. Tu cita fue guardada.");
+        window.location.href = "mis-citas.html";
     } else {
-        alert("Esta cuenta no existe. Verifica tus datos o regístrate si no tienes una cuenta.");
+        alert("✅ Inicio de sesión exitoso");
+        window.location.href = "nueva-cita.html";
     }
 }
+
+function mostrarMensajePendiente() {
+    const mensaje = document.getElementById('mensajePendiente');
+    const pendingCita = JSON.parse(localStorage.getItem('pendingCita') || 'null');
+    if (pendingCita) {
+        mensaje.textContent = 'Tienes una cita pendiente guardada. Inicia sesión para verla en Mis Citas.';
+    }
+}
+
+mostrarMensajePendiente();
 </script>
 <script>
 function updateUserActions() {
