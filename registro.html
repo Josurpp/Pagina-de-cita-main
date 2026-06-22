@@ -39,33 +39,75 @@
 
 
 
-<div class="container">
-
-
+<div class="login-wrapper">
+    <div class="login-box">
     <h1>Registrar</h1>
-
     <div class="form-group">
     <label>Nombres y Apellidos</label>
     <input type="text" id="nombre" placeholder="Carlos">
 </div>
 
 <div class="form-group">
-    <label>Numero DNI</label>
-    <input type="text" id="dni" placeholder="62345678">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label style="margin-bottom: 0;">Numero DNI</label>
+        <span id="dniWarning" style="color: #d32f2f; font-size: 12px; font-weight: bold; display: none;">⚠️ Máximo 8 dígitos</span>
+    </div>
+    <input type="text" id="dni" placeholder="62345678" oninput="verificarLongitudDNI()" style="margin-top: 8px;">
 </div>
 
 <div class="form-group">
-    <label>Contraseña</label>
-    <input type="password" id="password" placeholder="********">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label style="margin-bottom: 0;">Contraseña</label>
+        <span id="passWarning" style="color: #d32f2f; font-size: 12px; font-weight: bold; display: none;">⚠️ Debe tener al menos 6 caracteres</span>
+    </div>
+    <input type="password" id="password" placeholder="********" oninput="verificarLongitudPassword()" style="margin-top: 8px;">
 </div>
 
 
 <button type="button" onclick="registrar()">Registrarse</button>
+<div class="registro-link" style="text-align: center; margin-top: 20px;">
+        <span style="font-size: 14px; color: #555;">¿Ya tienes una cuenta? </span>
+        <a href="perfil.html" style="color: #1e88e5; text-decoration: none; font-weight: bold;">Inicia sesión aquí</a>
+</div>
 <p id="mensajeError" class="error-message" style="margin-top: 10px; color: #d32f2f; display: none;"></p>
 
 </div>
 
 <script>
+function verificarLongitudDNI() {
+    let dniInput = document.getElementById("dni");
+    let warningSpan = document.getElementById("dniWarning");
+
+    // Si escribe más de 8 caracteres, mostramos la advertencia roja
+    if (dniInput.value.length > 8) {
+        warningSpan.style.display = "inline-block";
+        dniInput.style.borderColor = "#d32f2f"; // Pinta el borde de rojo también
+        dniInput.style.outlineColor = "#d32f2f";
+    } else {
+        // Si borra y vuelve a tener 8 o menos, la ocultamos
+        warningSpan.style.display = "none";
+        dniInput.style.borderColor = "#ccc"; // Vuelve al color original
+        dniInput.style.outlineColor = ""; 
+    }
+}
+
+function verificarLongitudPassword() {
+    let passInput = document.getElementById("password");
+    let warningSpan = document.getElementById("passWarning");
+
+    // Si ya empezó a escribir (más de 0) pero tiene menos de 6 caracteres
+    if (passInput.value.length > 0 && passInput.value.length < 6) {
+        warningSpan.style.display = "inline-block";
+        passInput.style.borderColor = "#d32f2f"; // Borde rojo
+        passInput.style.outlineColor = "#d32f2f";
+    } else {
+        // Si borra todo o si ya alcanzó los 6 caracteres, ocultamos la alerta
+        warningSpan.style.display = "none";
+        passInput.style.borderColor = "#ccc"; // Vuelve al color gris normal
+        passInput.style.outlineColor = ""; 
+    }
+}
+
 function updateUserActions() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");

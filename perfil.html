@@ -35,28 +35,31 @@
 
 
 
-<div class="container">
+<div class="login-wrapper">
+    <div class="login-box">
+        <h1>Iniciar Sesión</h1>
 
+        <div class="form-group">
+            <label>Numero DNI</label>
+            <input type="text" id="dni" placeholder="62345678">
+        </div>
 
-    <h1>Iniciar Sesión</h1>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="********">
+        </div>
 
+        <button onclick="iniciarSesion()">Ingresar</button>
+        
+        <div class="registro-link" style="text-align: center; margin-top: 20px;">
+            <span style="font-size: 14px; color: #555;">¿Aún no tienes cuenta? </span>
+            <a href="registro.html" style="color: #1e88e5; text-decoration: none; font-weight: bold;">Regístrate aquí</a>
+        </div>
 
-    <div class="form-group">
-        <label>Numero DNI</label>
-        <input type="text" id="dni" placeholder="62345678">
+        <p id="mensajeError" class="error-message" style="margin-top: 15px; color: #d32f2f; display: none; text-align: center;"></p>
+        <p id="mensajePendiente" class="info-message" style="margin-top: 15px; color: #333; text-align: center;"></p>
     </div>
-
-
-    <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="password" placeholder="********">
-    </div>
-
-
-    <button onclick="iniciarSesion()">Ingresar</button>
-    <button onclick="window.open('registro.html', '_self')">Registrar</button>
-    <p id="mensajeError" class="error-message" style="margin-top: 10px; color: #d32f2f; display: none;"></p>
-    <p id="mensajePendiente" class="info-message" style="margin-top: 10px; color: #333;"></p>
+</div>
 
 
 </div>
