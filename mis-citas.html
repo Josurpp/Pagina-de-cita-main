@@ -13,9 +13,14 @@
         <h1>Sistema de Citas Médicas</h1>
     </div>
 
-    <div class="user-actions">
-        <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
-        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
+    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
+        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
+                 alt="Iniciar Sesión" 
+                 style="width: 35px; height: 35px; vertical-align: middle; transition: transform 0.2s;">
+        </a>
+        
+        <a id="linkSalir" href="#" onclick="cerrarSesion()" class="btn-logout">Salir</a>
     </div>
 </header>
 
@@ -23,7 +28,7 @@
     <nav class="main-nav">
         <a href="nueva-cita.html">Nueva Cita</a>
         <a href="mis-citas.html">Mis Citas</a>
-        <a href="agenda-medica.html">Agenda Médica</a>
+        <a href="nuestros-especialistas.html">Especialistas</a>
     </nav>
 </aside>
 
@@ -316,14 +321,30 @@ function confirmarCancelacion() {
 mostrarCitas();
 </script>
 <script>
-function updateUserActions() {
+// Función para destruir los datos de sesión correctamente
+function cerrarSesion() {
+    localStorage.removeItem("logueado");
+    localStorage.removeItem("dni");
+    localStorage.removeItem("nombre");
+    
+    // Te mandamos de regreso a la página de inicio de sesión
+    window.location.href = "perfil.html"; 
+}
+
+// Función para actualizar SOLO los botones de la barra superior
+function updateUI() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
+    
     const logged = localStorage.getItem("logueado") === "si";
+
+    // Ocultar o Mostrar la personita y el botón de salir
     if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
     if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
 }
-updateUserActions();
+
+// Ejecutamos la función apenas cargue la página
+updateUI();
 </script>
 
 </body>

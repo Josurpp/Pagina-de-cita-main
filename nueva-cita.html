@@ -13,9 +13,14 @@
         <h1>Sistema de Citas Médicas</h1>
     </div>
 
-    <div class="user-actions">
-        <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
-        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
+    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
+        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
+                 alt="Iniciar Sesión" 
+                 style="width: 35px; height: 35px; vertical-align: middle; transition: transform 0.2s;">
+        </a>
+        
+        <a id="linkSalir" href="#" onclick="cerrarSesion()" class="btn-logout">Salir</a>
     </div>
 </header>
 
@@ -23,7 +28,7 @@
     <nav class="main-nav">
         <a href="nueva-cita.html">Nueva Cita</a>
         <a href="mis-citas.html">Mis Citas</a>
-        <a href="agenda-medica.html">Agenda Médica</a>
+        <a href="nuestros-especialistas.html">Especialistas</a>
     </nav>
 </aside>
 
@@ -35,7 +40,7 @@
          alt="Atención médica">
 
     <div class="hero-text">
-        <h1>Bienvenido al Sistema de Citas Médicas</h1>
+        <h1 id="tituloBienvenida">Bienvenido al Sistema de Citas Médicas</h1>
         <p>
             Agenda tus consultas médicas de manera rápida,
             segura y desde cualquier lugar.
@@ -121,7 +126,6 @@
 </div>
 
 <script>
-
 const especialidades = [
 "Cardiología",
 "Pediatría",
@@ -150,157 +154,155 @@ const medicos = [
 
 let citas = JSON.parse(localStorage.getItem('citas') || '[]');
 
-const especialidadSelect =
-document.getElementById("especialidad");
+const especialidadSelect = document.getElementById("especialidad");
 
 especialidades.forEach(e=>{
-let option=document.createElement("option");
-option.text=e;
-option.value=e;
-especialidadSelect.add(option);
+    let option=document.createElement("option");
+    option.text=e;
+    option.value=e;
+    especialidadSelect.add(option);
 });
 
 especialidadSelect.addEventListener("change",()=>{
 
-const esp=especialidadSelect.value;
+    const esp=especialidadSelect.value;
+    const medicoSelect = document.getElementById("medico");
 
-const medicoSelect =
-document.getElementById("medico");
+    medicoSelect.innerHTML='<option value="">Seleccione</option>';
 
-medicoSelect.innerHTML=
-'<option value="">Seleccione</option>';
-
-medicos
-.filter(m=>m.especialidad===esp &&
-m.estado==="Activo")
-.forEach(m=>{
-
-let option=document.createElement("option");
-
-option.value=m.id;
-
-option.text=m.nombre;
-
-medicoSelect.add(option);
-
-});
-
+    medicos
+    .filter(m=>m.especialidad===esp && m.estado==="Activo")
+    .forEach(m=>{
+        let option=document.createElement("option");
+        option.value=m.id;
+        option.text=m.nombre;
+        medicoSelect.add(option);
+    });
 });
 
 function agendar(){
 
-const medicoId=
-document.getElementById("medico").value;
+    const medicoId= document.getElementById("medico").value;
+    const fecha= document.getElementById("fecha").value;
+    const hora= document.getElementById("hora").value;
 
-const fecha=
-document.getElementById("fecha").value;
+    if(!medicoId || !fecha){
+        alert("Complete todos los campos");
+        return;
+    }
 
-const hora=
-document.getElementById("hora").value;
+    const hoy = new Date();
+    const fechaSeleccionada = new Date(fecha);
 
-if(!medicoId || !fecha){
-alert("Complete todos los campos");
-return;
+    if(fechaSeleccionada < hoy.setHours(0,0,0,0)){
+        alert("Fecha inválida");
+        return;
+    }
+
+    // 1. Identificamos al usuario y al médico antes de validar
+    const dniUsuario = localStorage.getItem('dni') || 'anonimo';
+    const nombreUsuario = localStorage.getItem('nombre') || 'Paciente';
+    const medico = medicos.find(m=>m.id==medicoId);
+
+    // 2. Filtramos SOLO las citas del usuario actual
+    const misCitas = citas.filter(c=>c.dni === dniUsuario);
+
+    const misCitasDia = misCitas.filter(c=>c.fecha===fecha);
+    if(misCitasDia.length>=2){
+        alert("Máximo 2 citas por día para tu cuenta");
+        return;
+    }
+
+    const yoTengoTraslape = misCitas.some(c=> c.fecha===fecha && c.hora===hora);
+    if(yoTengoTraslape){
+        alert("Ya tienes una cita en ese horario");
+        return;
+    }
+
+    // 3. Verificamos si el MÉDICO elegido ya está ocupado a esa hora por cualquier paciente
+    const medicoOcupado = citas.some(c=> c.fecha===fecha && c.hora===hora && c.medico===medico.nombre);
+    if(medicoOcupado){
+        alert("Este médico ya ha sido seleccionado por otro usuario en ese horario.");
+        return;
+    }
+
+    const cita = {
+        dni: dniUsuario,
+        paciente: nombreUsuario,
+        medico: medico.nombre,
+        especialidad: medico.especialidad,
+        fecha,
+        hora,
+        estado: "Programada"
+    };
+
+    citas.push(cita);
+    localStorage.setItem('citas', JSON.stringify(citas));
+
+    const logged = localStorage.getItem("logueado") === "si";
+    if (!logged) {
+        localStorage.setItem('pendingCita', JSON.stringify(cita));
+        alert("Cita agendada. Ahora inicia sesión para continuar.");
+        window.location.href = "perfil.html";
+        return;
+    }
+
+    alert("Cita agendada correctamente.");
+    window.location.href = "mis-citas.html";
+    
+    // (Este código de abajo se mantiene igual a tu original)
+    const tbody= document.getElementById("tablaCitas");
+    if (!tbody) return;
+
+    tbody.innerHTML="";
+
+    citas.sort((a,b)=> new Date(a.fecha)-new Date(b.fecha));
+
+    citas.forEach(c=>{
+        tbody.innerHTML+=`
+        <tr>
+        <td>${c.medico}</td>
+        <td>${c.especialidad}</td>
+        <td>${c.fecha}</td>
+        <td>${c.hora}</td>
+        <td>${c.estado}</td>
+        </tr>
+        `;
+    });
 }
-
-const hoy = new Date();
-const fechaSeleccionada = new Date(fecha);
-
-if(fechaSeleccionada < hoy.setHours(0,0,0,0)){
-alert("Fecha inválida");
-return;
-}
-
-const citasDia =
-citas.filter(c=>c.fecha===fecha);
-
-if(citasDia.length>=2){
-alert("Máximo 2 citas por día");
-return;
-}
-
-const existeTraslape =
-citas.some(c=>
-c.fecha===fecha &&
-c.hora===hora
-);
-
-if(existeTraslape){
-alert("Ya tiene una cita en ese horario");
-
-elif(citas.some(c=>c.fecha===fecha &&
-c.hora===hora &&
-c.medico==medicoId))
-    throw new Error("Este elemento ya ha sido seleccionado por otro usuario.")
-return;
-}
-const medico=
-medicos.find(
-m=>m.id==medicoId
-);
-
-const dniUsuario = localStorage.getItem('dni') || 'anonimo';
-const nombreUsuario = localStorage.getItem('nombre') || 'Paciente';
-
-const cita = {
-    dni: dniUsuario,
-    paciente: nombreUsuario,
-    medico: medico.nombre,
-    especialidad: medico.especialidad,
-    fecha,
-    hora,
-    estado: "Programada"
-};
-
-citas.push(cita);
-localStorage.setItem('citas', JSON.stringify(citas));
-
-const logged = localStorage.getItem("logueado") === "si";
-if (!logged) {
-    localStorage.setItem('pendingCita', JSON.stringify(cita));
-    alert("Cita agendada. Ahora inicia sesión para continuar.");
-    window.location.href = "perfil.html";
-    return;
-}
-
-alert("Cita agendada correctamente.");
-window.location.href = "mis-citas.html";
-const tbody=
-document.getElementById("tablaCitas");
-if (!tbody) return;
-
-tbody.innerHTML="";
-
-citas.sort((a,b)=>
-new Date(a.fecha)-new Date(b.fecha)
-);
-
-citas.forEach(c=>{
-
-tbody.innerHTML+=`
-<tr>
-<td>${c.medico}</td>
-<td>${c.especialidad}</td>
-<td>${c.fecha}</td>
-<td>${c.hora}</td>
-<td>${c.estado}</td>
-</tr>
-`;
-
-});
-
-}
-
 </script>
 <script>
-function updateUserActions() {
+// Función para destruir los datos de sesión correctamente
+function cerrarSesion() {
+    localStorage.removeItem("logueado");
+    localStorage.removeItem("dni");
+    localStorage.removeItem("nombre");
+    
+    // Redirigir al inicio de sesión
+    window.location.href = "perfil.html"; 
+}
+
+// Función para actualizar la interfaz (botones y bienvenida)
+function updateUI() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
+    const tituloBienvenida = document.getElementById("tituloBienvenida");
+
     const logged = localStorage.getItem("logueado") === "si";
+    const nombreUsuario = localStorage.getItem("nombre");
+
+    // 1. Ocultar o Mostrar la personita y el botón de salir
     if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
     if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+
+    // 2. Personalizar el mensaje de bienvenida si está logueado
+    if (logged && nombreUsuario && tituloBienvenida) {
+        tituloBienvenida.textContent = "Bienvenido " + nombreUsuario + " al Sistema de Citas Médicas";
+    }
 }
-updateUserActions();
+
+// Ejecutar al cargar la página
+updateUI();
 </script>
 </body>
 </html>
