@@ -60,7 +60,7 @@
 </div>
 
 
-<button onclick="registrar()">Registrarse</button>
+<button type="button" onclick="registrar()">Registrarse</button>
 <p id="mensajeError" class="error-message" style="margin-top: 10px; color: #d32f2f; display: none;"></p>
 
 </div>
@@ -90,27 +90,62 @@ function ocultarError() {
 
 function registrar() {
     ocultarError();
-    
+
     let nombre = document.getElementById("nombre").value.trim();
     let dni = document.getElementById("dni").value.trim();
     let password = document.getElementById("password").value.trim();
 
-    if(nombre === "" || dni === "" || password === ""){
+    // Campos vacíos
+    if (nombre === "" || dni === "" || password === "") {
         mostrarError("⚠️ Completa todos los campos");
         return;
     }
 
-    if(dni.length !== 8 || isNaN(dni)){
-        mostrarError("❌ El DNI debe tener exactamente 8 dígitos numéricos");
+    // Nombre: solo letras y espacios
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(nombre)) {
+        mostrarError("❌ El nombre solo debe contener letras");
         return;
     }
 
+    // DNI: verificar si contiene letras
+    if (/[A-Za-z]/.test(dni)) {
+        mostrarError("❌ El DNI no puede contener letras");
+        return;
+    }
+
+    // DNI: verificar si contiene otros caracteres
+    if (!/^\d+$/.test(dni)) {
+        mostrarError("❌ El DNI solo debe contener números");
+        return;
+    }
+
+    // DNI: verificar longitud
+    if (dni.length !== 8) {
+        mostrarError("❌ El DNI debe tener exactamente 8 dígitos");
+        return;
+    }
+
+    // Contraseña: debe tener letras y números
+    if (!/^(?=.*[A-Za-z])(?=.*\d).+$/.test(password)) {
+        mostrarError("❌ La contraseña debe contener al menos una letra y un número");
+        return;
+    }
+
+    // Contraseña: mínimo 6 caracteres
+    if (password.length < 6) {
+        mostrarError("❌ La contraseña debe tener al menos 6 caracteres");
+        return;
+    }
+
+    // Verificar si el DNI ya está registrado
     let dniRegistrado = localStorage.getItem("dni");
-    if(dniRegistrado === dni){
-        mostrarError("❌ Este DNI ya está registrado. Intenta con otro o inicia sesión");
+
+    if (dniRegistrado === dni) {
+        mostrarError("❌ Este DNI ya está registrado");
         return;
     }
 
+    // Guardar datos
     localStorage.setItem("nombre", nombre);
     localStorage.setItem("dni", dni);
     localStorage.setItem("password", password);

@@ -119,6 +119,20 @@
             background: #555;
         }
 
+        .btn-exportar {
+            background: #43a047;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-exportar:hover {
+            background: #388e3c;
+        }
+
         .table-wrapper {
             background: white;
             border-radius: 8px;
@@ -360,6 +374,7 @@
             </select>
             <button class="btn-buscar" onclick="filtrarCitas()">Buscar</button>
             <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar</button>
+            <button class="btn-exportar" onclick="exportarCitas()">Exportar</button>
         </div>
 
         <!-- Tabla de citas -->
@@ -417,7 +432,7 @@
 
         tbody.innerHTML = citas.map((cita, index) => {
             const estadoClass = `status-${cita.estado.toLowerCase()}`;
-            const puedeMarcar = cita.estado !== 'Atendida';
+            const puedeMarcar = cita.estado !== 'Atendida' && cita.estado !== 'Cancelada';
             
             return `
                 <tr>
@@ -452,7 +467,12 @@
 
     function marcarAtendida(index) {
         const citas = JSON.parse(localStorage.getItem('citas')) || [];
-        
+        if(citas[index].estado === 'Cancelada') {
+            citas[index].estado = 'Atendida';
+            localStorage.setItem('citas', JSON.stringify(citas));
+            cargarCitas();
+        }
+
         if (citas[index].estado === 'Atendida') {
             alert('Esta cita ya está marcada como atendida.');
             return;
@@ -472,6 +492,9 @@
             citas.splice(index, 1);
             localStorage.setItem('citas', JSON.stringify(citas));
             cargarCitas();
+
+
+            document.getElementById('Cancelada').style.display = 'none';
         }
     }
 
@@ -514,6 +537,37 @@
         document.getElementById('filtroEspecialidad').value = '';
         document.getElementById('filtroEstado').value = '';
         cargarCitas();
+    }
+    function exportarCitas() {
+    const citas = JSON.parse(localStorage.getItem('citas')) || [];
+
+    if (citas.length === 0) {
+        alert("No hay citas para exportar.");
+        return;
+    }
+
+    let contenido = "===== REPORTE DE CITAS MÉDICAS =====\n\n";
+
+    citas.forEach((cita, index) => {
+        contenido += `Cita ${index + 1}\n`;
+        contenido += `Paciente: ${cita.paciente}\n`;
+        contenido += `Especialidad: ${cita.especialidad}\n`;
+        contenido += `Médico: ${cita.medico}\n`;
+        contenido += `Fecha: ${cita.fecha}\n`;
+        contenido += `Hora: ${cita.hora}\n`;
+        contenido += `Estado: ${cita.estado}\n`;
+        contenido += "-------------------------------------\n";
+    });
+
+    const blob = new Blob([contenido], { type: "text/plain;charset=utf-8" });
+    const enlace = document.createElement("a");
+
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = "citas_medicas.txt";
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
     }
 
     function actualizarEstadisticas(citas) {

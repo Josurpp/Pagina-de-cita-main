@@ -29,6 +29,53 @@
 
 <div class="container">
 
+    <!-- Banner Principal -->
+<div class="hero-banner">
+    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
+         alt="Atención médica">
+
+    <div class="hero-text">
+        <h1>Bienvenido al Sistema de Citas Médicas</h1>
+        <p>
+            Agenda tus consultas médicas de manera rápida,
+            segura y desde cualquier lugar.
+        </p>
+    </div>
+</div>
+
+<!-- Especialidades Destacadas -->
+<div class="especialidades-cards">
+
+    <div class="card-esp">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png"
+             alt="Cardiología">
+        <h3>Cardiología</h3>
+        <p>Especialistas en salud cardiovascular.</p>
+    </div>
+
+    <div class="card-esp">
+        <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png"
+             alt="Pediatría">
+        <h3>Pediatría</h3>
+        <p>Atención integral para niños y adolescentes.</p>
+    </div>
+
+    <div class="card-esp">
+        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png"
+             alt="Dermatología">
+        <h3>Dermatología</h3>
+        <p>Cuidado profesional de la piel.</p>
+    </div>
+
+    <div class="card-esp">
+        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+             alt="Medicina General">
+        <h3>Medicina General</h3>
+        <p>Atención médica para toda la familia.</p>
+    </div>
+
+</div>
+
 <h2>Nueva Cita Médica</h2>
 
 <label>Especialidad</label>
@@ -55,6 +102,21 @@
 </select>
 
 <button onclick="agendar()">Agendar Cita</button>
+
+<!-- Información adicional -->
+<div class="info-medica">
+
+    <h3>¿Por qué elegirnos?</h3>
+
+    <ul>
+        <li>✔ Especialistas certificados.</li>
+        <li>✔ Atención rápida y segura.</li>
+        <li>✔ Reserva de citas en línea.</li>
+        <li>✔ Horarios flexibles.</li>
+        <li>✔ Seguimiento de tus consultas médicas.</li>
+    </ul>
+
+</div>
 
 </div>
 
@@ -165,9 +227,13 @@ c.hora===hora
 
 if(existeTraslape){
 alert("Ya tiene una cita en ese horario");
+
+elif(citas.some(c=>c.fecha===fecha &&
+c.hora===hora &&
+c.medico==medicoId))
+    throw new Error("Este elemento ya ha sido seleccionado por otro usuario.")
 return;
 }
-
 const medico=
 medicos.find(
 m=>m.id==medicoId
