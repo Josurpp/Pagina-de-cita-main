@@ -5,64 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Citas Médicas</title>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-</head>
 
+    
+</head>
 
 <body>
 
-
-<!-- ========================================= -->
-<!-- HEADER -->
-<!-- ========================================= -->
-
-
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+<aside class="sidebar-moderna">
+    
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Citame</h2>
     </div>
 
-</header>
-
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html">Especialistas</a>
+    <nav class="main-nav-moderna">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="nuestros-especialistas.html">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
     </nav>
+
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html" class="active">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
 </aside>
 
+<div class="content-wrapper" style="padding: 0;">
 
+    <div class="login-wrapper">
+        <div class="login-box">
+            <h1>Iniciar Sesión</h1>
 
-<div class="login-wrapper">
-    <div class="login-box">
-        <h1>Iniciar Sesión</h1>
+            <div class="form-group">
+                <label>Número DNI</label>
+                <input type="text" id="dni" placeholder="62345678">
+            </div>
 
-        <div class="form-group">
-            <label>Numero DNI</label>
-            <input type="text" id="dni" placeholder="62345678">
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="********">
+            </div>
+
+            <button onclick="iniciarSesion()">Ingresar</button>
+            
+            <div class="registro-link">
+                <br>
+                <span>¿Aún no tienes cuenta? </span>
+                <a href="registro.html">Regístrate aquí</a>
+            </div>
+
+            <p id="mensajeError" class="error-message" style="margin-top: 15px; color: #ff8a80; display: none; text-align: center; font-weight: bold;"></p>
+            <p id="mensajePendiente" class="info-message" style="margin-top: 15px; text-align: center;"></p>
         </div>
-
-        <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" id="password" placeholder="********">
-        </div>
-
-        <button onclick="iniciarSesion()">Ingresar</button>
-        
-        <div class="registro-link" style="text-align: center; margin-top: 20px;">
-            <span style="font-size: 14px; color: #555;">¿Aún no tienes cuenta? </span>
-            <a href="registro.html" style="color: #1e88e5; text-decoration: none; font-weight: bold;">Regístrate aquí</a>
-        </div>
-
-        <p id="mensajeError" class="error-message" style="margin-top: 15px; color: #d32f2f; display: none; text-align: center;"></p>
-        <p id="mensajePendiente" class="info-message" style="margin-top: 15px; color: #333; text-align: center;"></p>
     </div>
-</div>
-
 
 </div>
+
 <script>
 function mostrarError(mensaje) {
     const errorDiv = document.getElementById('mensajeError');
@@ -137,13 +157,16 @@ function mostrarMensajePendiente() {
 
 mostrarMensajePendiente();
 </script>
+
 <script>
 function updateUserActions() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
     const logged = localStorage.getItem("logueado") === "si";
-    if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
-    if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+    
+    // Corregido a 'flex' para mantener la estructura robusta del sidebar expandido
+    if (perfilLink) perfilLink.style.display = logged ? "none" : "flex";
+    if (logoutLink) logoutLink.style.display = logged ? "flex" : "none";
 }
 updateUserActions();
 </script>

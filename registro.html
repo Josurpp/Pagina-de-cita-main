@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Citas Médicas</title>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
+
 </head>
 
 
@@ -18,24 +20,51 @@
 <!-- ========================================= -->
 
 
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+<aside class="sidebar-moderna">
+    
+    <!-- Logo y Marca -->
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Cita</h2>
     </div>
 
-<div class="user-actions">
-        <a id="linkPerfil" href="perfil.html">Iniciar Sesión</a>
-        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
-    </div>
-</header>
-
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html">Especialistas</a>
+    <!-- Menú Principal -->
+    <nav class="main-nav-moderna">
+        <a href="index.html" class="active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+        </a>
+        <!-- NUEVO: Enlace de Especialistas -->
+        <a href="nuestros-especialistas.html">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
     </nav>
+
+    <!-- Menú Inferior (Perfil y Salir) -->
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
 </aside>
+
+<div class="content-wrapper">
+
 
 
 

@@ -6,121 +6,112 @@
     font-family:Arial, sans-serif;
 }
 
-body{
-    background:#f4f4f4;
-    color:#333;
-    padding-top:90px;
+body {
+    margin: 0;
+    display: flex; 
+    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+    color: #333;
 }
 
-/* ===========================
-   HEADER
-=========================== */
-header{
-    background:#1e88e5;
-    color:white;
-    padding:0 20px;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    z-index:1000;
+/* ========================================= */
+/* DISEÑO DE LA BARRA LATERAL (TIPO APP) */
+/* ========================================= */
+.sidebar-moderna {
+    width: 140px; 
+    height: 100vh; 
+    background-color: #002b5e; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 35px;
+    box-sizing: border-box;
+    z-index: 1000;
+    
+    /* MÁGICA DE SEGURIDAD: Si la pantalla es muy bajita, permite hacer scroll en el menú */
+    overflow-y: auto; 
 }
 
-header .brand h1{
-    font-size:1.2rem;
-    margin:0;
+/* Logo y Marca superior */
+.brand-moderna {
+    text-align: center;
+    color: #00d4ff; 
+    margin-bottom: 45px;
 }
 
-header .user-actions{
-    display:flex;
-    align-items:center;
-    gap:18px;
+.brand-moderna .logo-icon {
+    font-size: 55px;
+    margin-bottom: 8px;
 }
 
-header .user-actions a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    padding:8px 10px;
-    border-radius:5px;
+.brand-moderna h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
 }
 
-header .user-actions a:hover{
-    background:rgba(255,255,255,0.15);
+/* Configuración de los contenedores de navegación */
+.sidebar-moderna nav,
+.bottom-nav-moderna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px; 
 }
 
-header .btn-logout{
-    border:1px solid rgba(255,255,255,0.6);
+/* ¡EL TRUCO MÁGICO! Empuja Perfil y Salir al fondo absoluto */
+.bottom-nav-moderna {
+    margin-top: auto !important; 
+    margin-bottom: 35px;
 }
 
-header .btn-admin{
-    background:rgba(227,57,53,0.9);
-    padding:8px 15px;
+/* Estilo de los botones del menú */
+.sidebar-moderna a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    font-size: 14px; 
+    width: 95px; 
+    height: 95px; 
+    border-radius: 18px; 
+    transition: all 0.3s ease;
 }
 
-header .btn-admin:hover{
-    background:#d32f2f;
+.sidebar-moderna a i {
+    font-size: 28px; 
+    margin-bottom: 8px;
 }
 
-/* ===========================
-   SIDEBAR
-=========================== */
-aside.sidebar{
-    background:#1e88e5;
-    color:white;
-    position:fixed;
-    top:70px;
-    left:0;
-    bottom:0;
-    width:220px;
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    overflow-y:auto;
+/* Botón de la página actual (activo) */
+.sidebar-moderna a.active {
+    background-color: white;
+    color: #002b5e;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-weight: bold;
 }
 
-aside.sidebar .main-nav{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-aside.sidebar .main-nav a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    padding:10px 12px;
-    border-radius:6px;
-    display:block;
-}
-
-aside.sidebar .main-nav a:hover{
-    background:rgba(255,255,255,0.15);
+/* Efecto Hover */
+.sidebar-moderna a:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ===========================
    CONTENIDO PRINCIPAL
 =========================== */
-.content-wrapper{
-    margin-left:240px;
-    padding:20px;
+.content-wrapper {
+    margin-left: 140px; /* Cambiado de 110px a 140px */
+    padding: 30px;
+    width: calc(100% - 140px);
+    box-sizing: border-box;
 }
 
-.container{
-    margin-left:240px;
-    margin-right:20px;
-    margin-top:20px;
-    background:white;
-    padding:25px;
-    border-radius:8px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
 
 /* ===========================
    TITULOS
@@ -683,39 +674,97 @@ table tr:nth-child(even){
    LOGIN / REGISTRO CENTRADO
 =========================== */
 .login-wrapper {
-    margin-left: 240px; /* Respeta el espacio del sidebar */
+    position: fixed; 
+    top: 0;
+    left: 140px; 
+    width: calc(100vw - 140px); 
+    height: 100vh;
+    background: linear-gradient(135deg, #e0f2fe 0%, #002b5e 100%) !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 120px); /* Centrado vertical restando el header */
-    padding: 20px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    z-index: 999;
 }
 
+/* Convertimos la caja en un panel translúcido elegante */
 .login-box {
-    background: white;
-    padding: 35px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.25) !important; /* Blanco con 25% de opacidad */
+    backdrop-filter: blur(12px) !important;           /* Efecto de vidrio esmerilado */
+    -webkit-backdrop-filter: blur(12px) !important;   /* Compatibilidad con Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borde sutil brillante */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2) !important; /* Sombra suave profunda */
+    border-radius: 20px !important;
+    padding: 40px;
     width: 100%;
-    max-width: 400px; /* Ancho ideal para que no se vea estirado */
+    max-width: 400px;
+    color: #ffffff; /* Texto claro para mejor contraste */
 }
 
+/* Ajustes de contraste para el título */
 .login-box h1 {
-    text-align: center;
+    color: #ffffff !important;
     margin-bottom: 25px;
-    color: #1e88e5;
+    font-weight: 700;
+    text-align: center;
 }
 
-.login-box button {
-    width: 100%; /* Hace que el botón ocupe todo el ancho */
-    margin-right: 0;
-    font-size: 16px;
+/* Cambiamos las etiquetas a un color blanco/celeste para que resalten perfectamente */
+.login-box label {
+    color: #050505 !important; 
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
 }
 
-/* Ajuste responsive para celulares */
+/* Estilo estilizado para los inputs dentro del contenedor transparente */
+.login-box input {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #333 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Ajuste para el enlace inferior "¿Ya tienes una cuenta?" */
+.login-box .registro-link span {
+    color: #111111 !important; /* Texto gris claro/blanco */
+    
+}
+
+.login-box .registro-link a {
+    color: #00d4ff !important; /* Cyan brillante para resaltar el enlace */
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ==========================================================================
+   ALERTAS Y ADVERTENCIAS DE VALIDACIÓN (Específicas de Registro)
+   ========================================================================== */
+#dniWarning, #passWarning, #mensajeError, .error-message {
+    color: #ff8a80 !important; /* Rojo claro/salmón brillante para que sea legible */
+    font-weight: bold;
+}
+
+/* Ajuste extra en caso de que uses un mensaje informativo o de espera */
+#mensajePendiente {
+    color: #ffeb3b !important; /* Amarillo brillante para avisos importantes */
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   RESPONSIVE MÓVIL
+   ========================================================================== */
 @media (max-width: 700px) {
     .login-wrapper {
-        margin-left: 0;
-        min-height: calc(100vh - 180px);
+        position: relative;
+        left: 0;
+        width: 100%;
+        min-height: calc(100vh - 90px);
+        height: auto;
     }
 }

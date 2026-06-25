@@ -1,0 +1,203 @@
+/* Estilos específicos para la interfaz interactiva de la imagen */
+
+        /*nuevas citas */
+        .agendamiento-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        @media(max-width: 768px) {
+            .agendamiento-container { grid-template-columns: 1fr; }
+        }
+
+        .panel-izquierdo, .panel-derecho {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-busqueda {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* Lista de especialidades y médicos */
+        .lista-seleccionable {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .item-seleccionable {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border: 1px solid #f1f5f9;
+            background: #f8fafc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .item-seleccionable:hover {
+            background: #e2e8f0;
+        }
+
+        .item-seleccionable.activo {
+            background: #002b5e;
+            color: #ffffff;
+            border-color: #002b5e;
+        }
+
+        .item-seleccionable i {
+            font-size: 18px;
+            color: #00d4ff;
+        }
+        .item-seleccionable.activo i {
+            color: #ffffff;
+        }
+
+        /* Grid de Horarios estilo Bloques */
+        .subtitulo-disponibilidad {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .grid-horarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .bloque-hora {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        .bloque-hora:hover {
+            border-color: #002b5e;
+            background: #f1f5f9;
+        }
+
+        .bloque-hora.activo {
+            background: #002b5e;
+            color: #ffffff;
+            border-color: #002b5e;
+        }
+
+        /* Input de Fecha estilizado */
+        .input-fecha {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            width: 100%;
+        }
+
+        .btn-agendar-moderno {
+            grid-column: 1 / -1;
+            background: #002b5e;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-agendar-moderno:hover {
+            background: #001f44;
+        }
+
+        /* mis citas*/
+        /* Estilos interactivos para la reprogramación en bloques (Similares a la imagen del profesor) */
+        .reprogramar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .input-fecha-repro {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .grid-horarios-repro {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .bloque-hora-repro {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        .bloque-hora-repro:hover {
+            border-color: #002b5e;
+            background: #f1f5f9;
+        }
+
+        .bloque-hora-repro.activo {
+            background: #002b5e;
+            color: #ffffff;
+            border-color: #002b5e;
+        }
+
+        .btn-warning {
+            background-color: #00d4ff;
+            color: #002b5e;
+            font-weight: bold;
+        }
+        .btn-warning:hover {
+            background-color: #00b4d8;
+        }

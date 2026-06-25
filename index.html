@@ -2,7 +2,6 @@
 <!-- SISTEMA DE CITAS MÉDICAS - HTML5 WIREFRAME -->
 <!-- ========================================= -->
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,89 +9,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio - Sistema de Citas Médicas</title>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
 
-
 <!-- ========================================= -->
-<!-- HEADER -->
+<!-- BARRA LATERAL (SIDEBAR) -->
 <!-- ========================================= -->
-
-
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+<aside class="sidebar-moderna">
+    
+    <!-- Logo y Marca -->
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Cita</h2>
     </div>
 
-    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
-        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
-                 alt="Iniciar Sesión" 
-                 style="width: 35px; height: 35px; vertical-align: middle; transition: transform 0.2s;">
+    <!-- Menú Principal -->
+    <nav class="main-nav-moderna">
+        <a href="index.html" class="active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
         </a>
-        
-        <a id="linkSalir" href="salir.html" class="btn-logout">Salir</a>
-    </div>
-</header>
-
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html">Especialistas</a>
+        <a href="nuestros-especialistas.html">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
     </nav>
+
+    <!-- Menú Inferior (Perfil y Salir) -->
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
 </aside>
 
-
+<!-- ========================================= -->
+<!-- CONTENIDO PRINCIPAL (DERECHA) -->
+<!-- ========================================= -->
 <div class="content-wrapper">
 
-
-
-<div class="container">
-
-
-    <h1>Página de Inicio</h1>
-
-
-    <div class="cards">
-
-
-        <div class="card">
-            <h3>Nueva Cita</h3>
-            <p>Registrar una nueva consulta médica.</p>
-            <button onclick="irA('nueva-cita.html')">Ir</button>
+    <!-- Banner de Bienvenida con Texto Superpuesto -->
+    <div class="hero-banner">
+        <img src="https://images.unsplash.com/photo-1631248055158-edec7a3c072b?auto=format&fit=crop&w=1200&q=80" alt="Clínica Médica">
+        <div class="hero-text">
+            <h1>¡Bienvenido a seccion de Citas!</h1>
+            <p>Gestiona tus consultas de salud de forma ágil, segura y sin filas. Tu bienestar es nuestra prioridad.</p>
         </div>
-
-
-        <div class="card">
-            <h3>Mis Citas</h3>
-            <p>Consultar próximas citas e historial.</p>
-            <button onclick="irA('mis-citas.html')">Ir</button>
-        </div>
-
-
-        <div class="card">
-            <h3>Agenda Médica</h3>
-            <p>Visualizar agenda diaria o semanal.</p>
-            <button onclick="irA('agenda-medica.html')">Ir</button>
-        </div>
-
-
     </div>
 
+    <!-- Contenedor de Tarjetas de Acción -->
+    <div class="container" style="margin-top: 0;"> 
+        <h2 style="color: #002b5e; font-weight: 600;">¿Qué deseas hacer hoy?</h2>
 
-</div>
+        <div class="cards">
+
+            <!-- Tarjeta 1: Agendar -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=300&q=80" alt="Nueva Cita" style="width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 15px;">
+                <h3>Nueva Cita</h3>
+                <p style="margin-bottom: 15px; color: #666;">Registrar una nueva consulta médica.</p>
+                <button onclick="irA('nueva-cita.html')">Ir</button>
+            </div>
+
+            <!-- Tarjeta 2: Mis Citas -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=300&q=80" alt="Historial" style="width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 15px;">
+                <h3>Mis Citas</h3>
+                <p style="margin-bottom: 15px; color: #666;">Consultar próximas citas e historial.</p>
+                <button onclick="irA('mis-citas.html')">Ir</button>
+            </div>
+
+            <!-- Tarjeta 3: Agenda -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=300&q=80" alt="Calendario" style="width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 15px;">
+                <h3>Agenda Médica</h3>
+                <p style="margin-bottom: 15px; color: #666;">Visualizar agenda diaria o semanal.</p>
+                <button onclick="irA('agenda-medica.html')">Ir</button>
+            </div>
+
+        </div>
+    </div>
+
+</div> <!-- Fin de content-wrapper -->
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT LOGIC -->
+<!-- ========================================= -->
 <script>
+function cerrarSesion() {
+    localStorage.removeItem("logueado");
+    localStorage.removeItem("dni");
+    localStorage.removeItem("nombre");
+    window.location.href = "perfil.html"; 
+}
+
 function updateUserActions() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
     const logged = localStorage.getItem("logueado") === "si";
-    if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
-    if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+    
+    if (perfilLink) perfilLink.style.display = logged ? "none" : "flex";
+    if (logoutLink) logoutLink.style.display = logged ? "flex" : "none";
 }
 
 function irA(dest) {
@@ -101,5 +135,6 @@ function irA(dest) {
 
 updateUserActions();
 </script>
+
 </body>
 </html>

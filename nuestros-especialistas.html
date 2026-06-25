@@ -4,62 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestros Especialistas - Sistema de Citas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+<aside class="sidebar-moderna">
+    
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Cita</h2>
     </div>
 
-    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
-        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
-                 alt="Iniciar Sesión" 
-                 style="width: 35px; height: 35px; vertical-align: middle;">
+    <nav class="main-nav-moderna">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
         </a>
-        <a id="linkSalir" href="#" onclick="cerrarSesion()" class="btn-logout">Salir</a>
-    </div>
-</header>
-
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html" class="active">Especialistas</a>
+        <a href="nuestros-especialistas.html" class="active">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
     </nav>
+
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
 </aside>
 
-<div class="container">
+<div class="content-wrapper">
 
-    <h1 id="tituloBienvenida">Nuestros Especialistas</h1>
-    <p style="color: #666; margin-bottom: 20px;">Selecciona una especialidad para conocer a los médicos disponibles.</p>
-
-    <div style="margin-bottom: 25px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 8px;">Filtrar por Especialidad:</label>
-        <select id="filtroEspecialidad" style="padding: 10px; width: 100%; max-width: 350px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px;">
-            <option value="">-- Seleccione una Especialidad --</option>
-        </select>
+<div class="hero-banner" style="position: relative; width: 100%; height: 180px; overflow: hidden; margin-bottom: 35px; border-radius: 8px;">
+    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Staff Médico" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="hero-text">
+        <h1 id="tituloBienvenida">Nuestros Especialistas</h1>
+        <p>Conoce al equipo de profesionales de primer nivel dedicados a cuidar de ti.</p>
     </div>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Médico</th>
-                <th>Especialidad</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody id="tablaMedicos">
-            <tr>
-                <td colspan="3" style="text-align: center; color: #888; padding: 20px;">
-                    Por favor, elija una especialidad arriba para ver el staff médico.
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
 
+        <p style="color: #666; margin-bottom: 25px;">Selecciona una especialidad para conocer a los médicos disponibles.</p>
+
+        <div style="margin-bottom: 30px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #002b5e;">Filtrar por Especialidad:</label>
+            <select id="filtroEspecialidad" style="padding: 12px; width: 100%; max-width: 350px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 14px; outline: none;">
+                <option value="">-- Seleccione una Especialidad --</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Foto</th>
+                    <th>Médico</th>
+                    <th>Especialidad</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tablaMedicos">
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #888; padding: 30px;">
+                        Por favor, elija una especialidad arriba para ver el staff médico.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 </div>
 
 <script>
@@ -71,20 +99,21 @@ const ForumEspecialidades = [
     "Medicina General"
 ];
 
+// Se agregaron enlaces a fotos reales de médicos de alta calidad (Unsplash)
 const medicos = [
-    { id: 1, nombre: "Dr. Pérez", especialidad: "Cardiología", estado: "Activo" },
-    { id: 2, nombre: "Dra. Gómez", especialidad: "Cardiología", estado: "Activo" },
-    { id: 3, nombre: "Dr. Morales", especialidad: "Cardiología", estado: "Activo" },
-    { id: 4, nombre: "Dra. Sánchez", especialidad: "Cardiología", estado: "Activo" },
-    { id: 5, nombre: "Dr. Rodríguez", especialidad: "Pediatría", estado: "Activo" },
-    { id: 6, nombre: "Dra. Ruiz", especialidad: "Pediatría", estado: "Activo" },
-    { id: 7, nombre: "Dra. Fernández", especialidad: "Pediatría", estado: "Activo" },
-    { id: 8, nombre: "Dr. Torres", especialidad: "Dermatología", estado: "Activo" },
-    { id: 9, nombre: "Dra. Álvarez", especialidad: "Dermatología", estado: "Activo" },
-    { id: 10, nombre: "Dr. Castillo", especialidad: "Dermatología", estado: "Activo" },
-    { id: 11, nombre: "Dr. López", especialidad: "Medicina General", estado: "Activo" },
-    { id: 12, nombre: "Dra. Martínez", especialidad: "Medicina General", estado: "Activo" },
-    { id: 13, nombre: "Dr. Herrera", especialidad: "Medicina General", estado: "Activo" }
+    { id: 1, nombre: "Dr. Pérez", specialty: "Cardiología", estado: "Activo", foto: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 2, nombre: "Dra. Gómez", specialty: "Cardiología", estado: "Activo", foto: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 3, nombre: "Dr. Morales", specialty: "Cardiología", estado: "Activo", foto: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 4, nombre: "Dra. Sánchez", specialty: "Cardiología", estado: "Activo", foto: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 5, nombre: "Dr. Rodríguez", specialty: "Pediatría", estado: "Activo", foto: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 6, nombre: "Dra. Ruiz", specialty: "Pediatría", estado: "Activo", foto: "https://images.unsplash.com/photo-1651008011612-e7084926503b?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 7, nombre: "Dra. Fernández", specialty: "Pediatría", estado: "Activo", foto: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 8, nombre: "Dr. Torres", specialty: "Dermatología", estado: "Activo", foto: "https://images.unsplash.com/photo-1637059824899-a441006a6875?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 9, nombre: "Dra. Álvarez", specialty: "Dermatología", estado: "Activo", foto: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 10, nombre: "Dr. Castillo", specialty: "Dermatología", estado: "Activo", foto: "https://images.unsplash.com/photo-1622902046580-2b47f47f0471?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 11, nombre: "Dr. López", specialty: "Medicina General", estado: "Activo", foto: "https://images.unsplash.com/photo-1618498082410-b4aa22193b38?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 12, nombre: "Dra. Martínez", specialty: "Medicina General", estado: "Activo", foto: "https://images.unsplash.com/photo-1591604021695-0c69b7c05981?auto=format&fit=crop&w=120&h=120&q=80" },
+    { id: 13, nombre: "Dr. Herrera", specialty: "Medicina General", estado: "Activo", foto: "https://images.unsplash.com/photo-1643297654416-05795d62e39c?auto=format&fit=crop&w=120&h=120&q=80" }
 ];
 
 // 1. Poblamos el selector de especialidades al cargar la página
@@ -101,34 +130,34 @@ filtroSelect.addEventListener("change", () => {
     const espSeleccionada = filtroSelect.value;
     const tbody = document.getElementById("tablaMedicos");
     
-    // Si vuelve a la opción por defecto ("-- Seleccione --")
     if (!espSeleccionada) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="3" style="text-align: center; color: #888; padding: 20px;">
+                <td colspan="4" style="text-align: center; color: #888; padding: 30px;">
                     Por favor, elija una especialidad arriba para ver el staff médico.
                 </td>
             </tr>`;
         return;
     }
 
-    // Filtrar los médicos
-    const medicosFiltrados = medicos.filter(m => m.especialidad === espSeleccionada);
+    // Filtrar médicos (nota el cambio a m.specialty para coincidir con el objeto)
+    const medicosFiltrados = medicos.filter(m => m.specialty === espSeleccionada);
     
-    tbody.innerHTML = ""; // Limpiamos la tabla
+    tbody.innerHTML = ""; 
 
-    // Pintamos los médicos que coincidan
     medicosFiltrados.forEach(m => {
-        // Validación visual por si en el futuro cambian el estado a "Inactivo"
         const claseEstado = m.estado === "Activo" ? "status-atendida" : "status-programada"; 
-        const colorTexto = m.estado === "Activo" ? "#2e7d32" : "#c62828"; // Verde para activo, Rojo para inactivo
+        const colorTexto = m.estado === "Activo" ? "#2e7d32" : "#c62828"; 
 
         tbody.innerHTML += `
             <tr>
-                <td style="font-weight: bold; color: #333;">${m.nombre}</td>
-                <td>${m.especialidad}</td>
-                <td>
-                    <span class="${claseEstado}" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: ${colorTexto};">
+                <td style="vertical-align: middle; padding: 10px;">
+                    <img src="${m.foto}" alt="${m.nombre}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #002b5e; display: block;">
+                </td>
+                <td style="font-weight: bold; color: #333; vertical-align: middle;">${m.nombre}</td>
+                <td style="vertical-align: middle; color: #555;">${m.specialty}</td>
+                <td style="vertical-align: middle;">
+                    <span class="${claseEstado}" style="padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: ${colorTexto}; background-color: ${m.estado === 'Activo' ? '#e8f5e9' : '#ffebee'}">
                         ${m.estado}
                     </span>
                 </td>
@@ -139,17 +168,13 @@ filtroSelect.addEventListener("change", () => {
 </script>
 
 <script>
-// Función para destruir los datos de sesión correctamente
 function cerrarSesion() {
     localStorage.removeItem("logueado");
     localStorage.removeItem("dni");
     localStorage.removeItem("nombre");
-    
-    // Redirigir al inicio de sesión
     window.location.href = "perfil.html"; 
 }
 
-// Función para manejar la interfaz y la bienvenida de esta página
 function updateUI() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
@@ -158,17 +183,15 @@ function updateUI() {
     const logged = localStorage.getItem("logueado") === "si";
     const nombreUsuario = localStorage.getItem("nombre");
 
-    // Ocultar o Mostrar botones
-    if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
-    if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
+    // Corregido: Mostrar como 'flex' para no romper el CSS del menú lateral agrandado
+    if (perfilLink) perfilLink.style.display = logged ? "none" : "flex";
+    if (logoutLink) logoutLink.style.display = logged ? "flex" : "none";
 
-    // Personalizar el mensaje con el nombre del usuario
     if (logged && nombreUsuario && tituloBienvenida) {
-        tituloBienvenida.textContent = "Especialistas disponibles para ti, " + nombreUsuario;
+        tituloBienvenida.textContent = "Especialistas para ti, " + nombreUsuario;
     }
 }
 
-// Ejecutar al cargar la página
 updateUI();
 </script>
 </body>

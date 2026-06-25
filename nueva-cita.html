@@ -4,224 +4,274 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Citas Médicas</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
+
 </head>
 <body>
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+<aside class="sidebar-moderna">
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Cita</h2>
     </div>
 
-    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
-        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
-                 alt="Iniciar Sesión" 
-                 style="width: 35px; height: 35px; vertical-align: middle; transition: transform 0.2s;">
+    <nav class="main-nav-moderna">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
         </a>
-        
-        <a id="linkSalir" href="#" onclick="cerrarSesion()" class="btn-logout">Salir</a>
-    </div>
-</header>
+        <a href="nuestros-especialistas.html">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html" class="active">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
+    </nav>
 
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html">Especialistas</a>
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
     </nav>
 </aside>
 
+<div class="content-wrapper">
 <div class="container">
 
-    <!-- Banner Principal -->
-<div class="hero-banner">
-    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
-         alt="Atención médica">
-
-    <div class="hero-text">
-        <h1 id="tituloBienvenida">Bienvenido al Sistema de Citas Médicas</h1>
-        <p>
-            Agenda tus consultas médicas de manera rápida,
-            segura y desde cualquier lugar.
-        </p>
-    </div>
-</div>
-
-<!-- Especialidades Destacadas -->
-<div class="especialidades-cards">
-
-    <div class="card-esp">
-        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png"
-             alt="Cardiología">
-        <h3>Cardiología</h3>
-        <p>Especialistas en salud cardiovascular.</p>
+    <div class="hero-banner">
+        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80" alt="Atención médica">
+        <div class="hero-text">
+            <h1 id="tituloBienvenida">Bienvenido al Sistema de Citas Médicas</h1>
+            <p>Agenda tus consultas médicas de manera rápida, segura y desde cualquier lugar.</p>
+        </div>
     </div>
 
-    <div class="card-esp">
-        <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png"
-             alt="Pediatría">
-        <h3>Pediatría</h3>
-        <p>Atención integral para niños y adolescentes.</p>
+    <div class="especialidades-cards">
+        <div class="card-esp">
+            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" alt="Cardiología">
+            <h3>Cardiología</h3>
+            <p>Especialistas en salud cardiovascular.</p>
+        </div>
+        <div class="card-esp">
+            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Pediatría">
+            <h3>Pediatría</h3>
+            <p>Atención integral para niños y adolescentes.</p>
+        </div>
+        <div class="card-esp">
+            <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png" alt="Dermatología">
+            <h3>Dermatología</h3>
+            <p>Cuidado profesional de la piel.</p>
+        </div>
+        <div class="card-esp">
+            <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Medicina General">
+            <h3>Medicina General</h3>
+            <p>Atención médica para toda la familia.</p>
+        </div>
     </div>
 
-    <div class="card-esp">
-        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png"
-             alt="Dermatología">
-        <h3>Dermatología</h3>
-        <p>Cuidado profesional de la piel.</p>
+    <h2>Nueva Cita Médica</h2>
+
+    <div class="agendamiento-container">
+        
+        <div class="panel-izquierdo">
+            <label style="font-weight: bold; color: #1e293b;">1. Selecciona la Especialidad</label>
+            <div class="lista-seleccionable" id="listaEspecialidades">
+                </div>
+
+            <label style="font-weight: bold; color: #1e293b; margin-top: 10px;">2. Selecciona el Médico</label>
+            <div class="lista-seleccionable" id="listaMedicos">
+                <div style="color: #64748b; font-size: 14px; padding: 10px;">Selecciona una especialidad primero...</div>
+            </div>
+        </div>
+
+        <div class="panel-derecho">
+            <label style="font-weight: bold; color: #1e293b;">3. Selecciona la Fecha</label>
+            <input type="date" id="fecha" class="input-fecha" onchange="actualizarHorariosDisponibles()">
+
+            <div class="subtitulo-disponibilidad" id="txtDisponibilidad">Disponibilidad: Seleccione un médico</div>
+            <div class="grid-horarios" id="contenedorHorarios">
+                </div>
+        </div>
+
+        <button class="btn-agendar-moderno" onclick="agendar()">Agendar Cita</button>
     </div>
 
-    <div class="card-esp">
-        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
-             alt="Medicina General">
-        <h3>Medicina General</h3>
-        <p>Atención médica para toda la familia.</p>
+    <div class="info-medica">
+        <h3>¿Por qué elegirnos?</h3>
+        <ul>
+            <li>✔ Especialistas certificados.</li>
+            <li>✔ Atención rápida y segura.</li>
+            <li>✔ Reserva de citas en línea.</li>
+            <li>✔ Horarios flexibles (Atención hasta las 7:00 PM).</li>
+            <li>✔ Seguimiento de tus consultas médicas.</li>
+        </ul>
     </div>
-
-</div>
-
-<h2>Nueva Cita Médica</h2>
-
-<label>Especialidad</label>
-<select id="especialidad">
-<option value="">Seleccione</option>
-</select>
-
-<label>Médico</label>
-<select id="medico">
-<option value="">Seleccione</option>
-</select>
-
-<label>Fecha</label>
-<input type="date" id="fecha">
-
-<label>Hora</label>
-<select id="hora">
-<option>08:00</option>
-<option>08:30</option>
-<option>09:00</option>
-<option>09:30</option>
-<option>10:00</option>
-<option>10:30</option>
-</select>
-
-<button onclick="agendar()">Agendar Cita</button>
-
-<!-- Información adicional -->
-<div class="info-medica">
-
-    <h3>¿Por qué elegirnos?</h3>
-
-    <ul>
-        <li>✔ Especialistas certificados.</li>
-        <li>✔ Atención rápida y segura.</li>
-        <li>✔ Reserva de citas en línea.</li>
-        <li>✔ Horarios flexibles.</li>
-        <li>✔ Seguimiento de tus consultas médicas.</li>
-    </ul>
 
 </div>
-
 </div>
 
 <script>
 const especialidades = [
-"Cardiología",
-"Pediatría",
-"Dermatología",
-"Medicina General"
+    { nombre: "Cardiología", icono: "fa-heart-pulse" },
+    { nombre: "Pediatría", icono: "fa-baby" },
+    { nombre: "Dermatología", icono: "fa-hand-holding-medical" },
+    { nombre: "Medicina General", icono: "fa-stethoscope" }
 ];
 
+// Distribución de Doctores por turnos específicos hasta las 19:00
 const medicos = [
-    { id: 1, nombre: "Dr. Pérez", especialidad: "Cardiología", estado: "Activo" },
-    { id: 2, nombre: "Dra. Gómez", especialidad: "Cardiología", estado: "Activo" },
-    { id: 3, nombre: "Dr. Morales", especialidad: "Cardiología", estado: "Activo" },
-    { id: 4, nombre: "Dra. Sánchez", especialidad: "Cardiología", estado: "Activo" },
-
-    { id: 5, nombre: "Dr. Rodríguez", especialidad: "Pediatría", estado: "Activo" },
-    { id: 6, nombre: "Dra. Ruiz", especialidad: "Pediatría", estado: "Activo" },
-    { id: 7, nombre: "Dra. Fernández", especialidad: "Pediatría", estado: "Activo" },
-
-    { id: 8, nombre: "Dr. Torres", especialidad: "Dermatología", estado: "Activo" },
-    { id: 9, nombre: "Dra. Álvarez", especialidad: "Dermatología", estado: "Activo" },
-    { id: 10, nombre: "Dr. Castillo", especialidad: "Dermatología", estado: "Activo" },
-
-    { id: 11, nombre: "Dr. López", especialidad: "Medicina General", estado: "Activo" },
-    { id: 12, nombre: "Dra. Martínez", especialidad: "Medicina General", estado: "Activo" },
-    { id: 13, nombre: "Dr. Herrera", especialidad: "Medicina General", estado: "Activo" }
+    { id: 1, nombre: "Dr. Pérez", especialidad: "Cardiología", estado: "Activo" },     // Mañana
+    { id: 2, nombre: "Dra. Gómez", especialidad: "Cardiología", estado: "Activo" },    // Tarde
+    { id: 3, nombre: "Dr. Morales", especialidad: "Cardiología", estado: "Activo" },   // Mañana
+    { id: 4, nombre: "Dra. Sánchez", especialidad: "Cardiología", estado: "Activo" },  // Tarde
+    { id: 5, nombre: "Dr. Rodríguez", especialidad: "Pediatría", estado: "Activo" },   // Mañana
+    { id: 6, nombre: "Dra. Ruiz", especialidad: "Pediatría", estado: "Activo" },        // Tarde
+    { id: 7, nombre: "Dra. Fernández", especialidad: "Pediatría", estado: "Activo" },   // Tarde
+    { id: 8, nombre: "Dr. Torres", especialidad: "Dermatología", estado: "Activo" },    // Mañana
+    { id: 9, nombre: "Dra. Álvarez", especialidad: "Dermatología", estado: "Activo" },  // Tarde
+    { id: 10, nombre: "Dr. Castillo", especialidad: "Dermatología", estado: "Activo" }, // Mañana
+    { id: 11, nombre: "Dr. López", especialidad: "Medicina General", estado: "Activo" }, // Mañana
+    { id: 12, nombre: "Dra. Martínez", especialidad: "Medicina General", estado: "Activo"}, // Tarde
+    { id: 13, nombre: "Dr. Herrera", especialidad: "Medicina General", estado: "Activo" } // Mañana
 ];
+
+// Bloques completos de horas distribuidos por rango
+const horariosManana = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"];
+const horariosTarde  = ["14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"];
+
+let varEspecialidadSeleccionada = "";
+let varMedicoSeleccionado = null;
+let varHoraSeleccionada = "";
 
 let citas = JSON.parse(localStorage.getItem('citas') || '[]');
 
-const especialidadSelect = document.getElementById("especialidad");
-
-especialidades.forEach(e=>{
-    let option=document.createElement("option");
-    option.text=e;
-    option.value=e;
-    especialidadSelect.add(option);
+// Inicializar lista de Especialidades
+const contenedorEsp = document.getElementById("listaEspecialidades");
+especialidades.forEach(e => {
+    let div = document.createElement("div");
+    div.className = "item-seleccionable";
+    div.innerHTML = `<i class="fa-solid ${e.icono}"></i> <span>${e.nombre}</span>`;
+    div.onclick = () => seleccionarEspecialidad(div, e.nombre);
+    contenedorEsp.appendChild(div);
 });
 
-especialidadSelect.addEventListener("change",()=>{
+function seleccionarEspecialidad(elemento, nombreEsp) {
+    document.querySelectorAll("#listaEspecialidades .item-seleccionable").forEach(i => i.classList.remove("activo"));
+    elemento.classList.add("activo");
+    
+    varEspecialidadSeleccionada = nombreEsp;
+    varMedicoSeleccionado = null;
+    varHoraSeleccionada = "";
+    
+    // Resetear médicos y horarios
+    const contenedorMed = document.getElementById("listaMedicos");
+    contenedorMed.innerHTML = "";
+    document.getElementById("contenedorHorarios").innerHTML = "";
+    document.getElementById("txtDisponibilidad").textContent = "Disponibilidad: Seleccione un médico";
 
-    const esp=especialidadSelect.value;
-    const medicoSelect = document.getElementById("medico");
-
-    medicoSelect.innerHTML='<option value="">Seleccione</option>';
-
-    medicos
-    .filter(m=>m.especialidad===esp && m.estado==="Activo")
-    .forEach(m=>{
-        let option=document.createElement("option");
-        option.value=m.id;
-        option.text=m.nombre;
-        medicoSelect.add(option);
+    medicos.filter(m => m.especialidad === nombreEsp && m.estado === "Activo").forEach(m => {
+        let div = document.createElement("div");
+        div.className = "item-seleccionable";
+        let turno = (m.id % 2 !== 0) ? "Mañana" : "Tarde";
+        div.innerHTML = `<i class="fa-solid fa-user-doctor"></i> <span>${m.nombre} (${turno})</span>`;
+        div.onclick = () => seleccionarMedico(div, m);
+        contenedorMed.appendChild(div);
     });
-});
+}
 
-function agendar(){
+function seleccionarMedico(elemento, objetoMedico) {
+    document.querySelectorAll("#listaMedicos .item-seleccionable").forEach(i => i.classList.remove("activo"));
+    elemento.classList.add("activo");
+    
+    varMedicoSeleccionado = objetoMedico;
+    varHoraSeleccionada = "";
+    actualizarHorariosDisponibles();
+}
 
-    const medicoId= document.getElementById("medico").value;
-    const fecha= document.getElementById("fecha").value;
-    const hora= document.getElementById("hora").value;
+function actualizarHorariosDisponibles() {
+    const contenedorHorarios = document.getElementById("contenedorHorarios");
+    const txtDisp = document.getElementById("txtDisponibilidad");
+    const fechaInput = document.getElementById("fecha").value;
 
-    if(!medicoId || !fecha){
-        alert("Complete todos los campos");
+    if (!varMedicoSeleccionado) return;
+    
+    contenedorHorarios.innerHTML = "";
+    
+    // Formatear cabecera de disponibilidad
+    if (fechaInput) {
+        let f = new Date(fechaInput + "T00:00:00");
+        let opciones = { day: 'numeric', month: 'short' };
+        txtDisp.textContent = `Disponibilidad: ${f.toLocaleDateString('es-ES', opciones)}`;
+    } else {
+        txtDisp.textContent = `Disponibilidad: Selecciona una fecha`;
+        return;
+    }
+
+    // Asignación de bloques según id (impar: mañana, par: tarde hasta las 19:00)
+    let listaHoras = (varMedicoSeleccionado.id % 2 !== 0) ? horariosManana : horariosTarde;
+
+    listaHoras.forEach(hora => {
+        let botonHora = document.createElement("div");
+        botonHora.className = "bloque-hora";
+        botonHora.textContent = hora;
+        
+        botonHora.onclick = () => {
+            document.querySelectorAll(".bloque-hora").forEach(b => b.classList.remove("activo"));
+            botonHora.classList.add("activo");
+            varHoraSeleccionada = hora;
+        };
+        
+        contenedorHorarios.appendChild(botonHora);
+    });
+}
+
+function agendar() {
+    const fecha = document.getElementById("fecha").value;
+
+    if (!varEspecialidadSeleccionada || !varMedicoSeleccionado || !fecha || !varHoraSeleccionada) {
+        alert("Por favor, complete todos los campos seleccionando Especialidad, Médico, Fecha y Horario.");
         return;
     }
 
     const hoy = new Date();
     const fechaSeleccionada = new Date(fecha);
 
-    if(fechaSeleccionada < hoy.setHours(0,0,0,0)){
+    if (fechaSeleccionada < hoy.setHours(0,0,0,0)) {
         alert("Fecha inválida");
         return;
     }
 
-    // 1. Identificamos al usuario y al médico antes de validar
     const dniUsuario = localStorage.getItem('dni') || 'anonimo';
     const nombreUsuario = localStorage.getItem('nombre') || 'Paciente';
-    const medico = medicos.find(m=>m.id==medicoId);
 
-    // 2. Filtramos SOLO las citas del usuario actual
-    const misCitas = citas.filter(c=>c.dni === dniUsuario);
-
-    const misCitasDia = misCitas.filter(c=>c.fecha===fecha);
-    if(misCitasDia.length>=2){
+    const misCitas = citas.filter(c => c.dni === dniUsuario);
+    const misCitasDia = misCitas.filter(c => c.fecha === fecha);
+    
+    if (misCitasDia.length >= 2) {
         alert("Máximo 2 citas por día para tu cuenta");
         return;
     }
 
-    const yoTengoTraslape = misCitas.some(c=> c.fecha===fecha && c.hora===hora);
-    if(yoTengoTraslape){
+    const yoTengoTraslape = misCitas.some(c => c.fecha === fecha && c.hora === varHoraSeleccionada);
+    if (yoTengoTraslape) {
         alert("Ya tienes una cita en ese horario");
         return;
     }
 
-    // 3. Verificamos si el MÉDICO elegido ya está ocupado a esa hora por cualquier paciente
-    const medicoOcupado = citas.some(c=> c.fecha===fecha && c.hora===hora && c.medico===medico.nombre);
-    if(medicoOcupado){
+    const medicoOcupado = citas.some(c => c.fecha === fecha && c.hora === varHoraSeleccionada && c.medico === varMedicoSeleccionado.nombre);
+    if (medicoOcupado) {
         alert("Este médico ya ha sido seleccionado por otro usuario en ese horario.");
         return;
     }
@@ -229,10 +279,10 @@ function agendar(){
     const cita = {
         dni: dniUsuario,
         paciente: nombreUsuario,
-        medico: medico.nombre,
-        especialidad: medico.especialidad,
+        medico: varMedicoSeleccionado.nombre,
+        especialidad: varMedicoSeleccionado.especialidad,
         fecha,
-        hora,
+        hora: varHoraSeleccionada,
         estado: "Programada"
     };
 
@@ -242,47 +292,22 @@ function agendar(){
     const logged = localStorage.getItem("logueado") === "si";
     if (!logged) {
         localStorage.setItem('pendingCita', JSON.stringify(cita));
-        alert("Cita agendada. Ahora inicia sesión para continuar.");
+        alert("¡Cita reservada con éxito! Ahora inicia sesión para confirmar.");
         window.location.href = "perfil.html";
         return;
     }
 
-    alert("Cita agendada correctamente.");
+    alert("¡Cita agendada correctamente!");
     window.location.href = "mis-citas.html";
-    
-    // (Este código de abajo se mantiene igual a tu original)
-    const tbody= document.getElementById("tablaCitas");
-    if (!tbody) return;
-
-    tbody.innerHTML="";
-
-    citas.sort((a,b)=> new Date(a.fecha)-new Date(b.fecha));
-
-    citas.forEach(c=>{
-        tbody.innerHTML+=`
-        <tr>
-        <td>${c.medico}</td>
-        <td>${c.especialidad}</td>
-        <td>${c.fecha}</td>
-        <td>${c.hora}</td>
-        <td>${c.estado}</td>
-        </tr>
-        `;
-    });
 }
-</script>
-<script>
-// Función para destruir los datos de sesión correctamente
+
 function cerrarSesion() {
     localStorage.removeItem("logueado");
     localStorage.removeItem("dni");
     localStorage.removeItem("nombre");
-    
-    // Redirigir al inicio de sesión
     window.location.href = "perfil.html"; 
 }
 
-// Función para actualizar la interfaz (botones y bienvenida)
 function updateUI() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
@@ -291,17 +316,13 @@ function updateUI() {
     const logged = localStorage.getItem("logueado") === "si";
     const nombreUsuario = localStorage.getItem("nombre");
 
-    // 1. Ocultar o Mostrar la personita y el botón de salir
     if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
     if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
 
-    // 2. Personalizar el mensaje de bienvenida si está logueado
     if (logged && nombreUsuario && tituloBienvenida) {
         tituloBienvenida.textContent = "Bienvenido " + nombreUsuario + " al Sistema de Citas Médicas";
     }
 }
-
-// Ejecutar al cargar la página
 updateUI();
 </script>
 </body>

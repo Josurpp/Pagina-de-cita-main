@@ -4,73 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gestión de Citas</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style2.css">
+
 </head>
 <body>
-<header>
-    <div class="brand">
-        <h1>Sistema de Citas Médicas</h1>
+    
+<aside class="sidebar-moderna">
+    <div class="brand-moderna">
+        <i class="fa-solid fa-notes-medical logo-icon"></i>
+        <h2>Cita</h2>
     </div>
 
-    <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
-        <a id="linkPerfil" href="perfil.html" title="Iniciar Sesión">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" 
-                 alt="Iniciar Sesión" 
-                 style="width: 35px; height: 35px; vertical-align: middle; transition: transform 0.2s;">
+    <nav class="main-nav-moderna">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
         </a>
-        
-        <a id="linkSalir" href="#" onclick="cerrarSesion()" class="btn-logout">Salir</a>
-    </div>
-</header>
+        <a href="nuestros-especialistas.html">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span>Especialistas</span>
+        </a>
+        <a href="nueva-cita.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Agendar</span>
+        </a>
+        <a href="mis-citas.html" class="active">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Citas</span>
+        </a>
+    </nav>
 
-<aside class="sidebar">
-    <nav class="main-nav">
-        <a href="nueva-cita.html">Nueva Cita</a>
-        <a href="mis-citas.html">Mis Citas</a>
-        <a href="nuestros-especialistas.html">Especialistas</a>
+    <nav class="bottom-nav-moderna">
+        <a id="linkPerfil" href="perfil.html">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Perfil</span>
+        </a>
+        <a id="linkSalir" href="#" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Salir</span>
+        </a>
     </nav>
 </aside>
 
-<!-- MIS CITAS -->
+<div class="content-wrapper">
+
 <div class="container" id="misCitas">
-
-    <!-- Banner -->
-<div class="hero-banner">
-    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80"
-         alt="Citas médicas">
-
-    <div class="hero-text">
-        <h1>Mis Citas Médicas</h1>
-        <p>
-            Consulta el estado de tus citas, revisa detalles
-            y administra tus reservas médicas.
-        </p>
-    </div>
-</div>
-
-<!-- Estadísticas -->
-<div class="estadisticas">
-
-    <div class="stat-card">
-        <h2>📅</h2>
-        <h3>Citas</h3>
-        <p>Consulta tus reservas programadas.</p>
+    <div class="hero-banner">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1200&q=80" alt="Citas médicas">
+        <div class="hero-text">
+            <h1>Mis Citas Médicas</h1>
+            <p>Consulta el estado de tus citas, revisa detalles y administra tus reservas médicas.</p>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <h2>👨‍⚕️</h2>
-        <h3>Especialistas</h3>
-        <p>Médicos disponibles para tu atención.</p>
+    <div class="estadisticas">
+        <div class="stat-card"><h2>📅</h2><h3>Citas</h3><p>Consulta tus reservas.</p></div>
+        <div class="stat-card"><h2>👨‍⚕️</h2><h3>Especialistas</h3><p>Médicos disponibles.</p></div>
+        <div class="stat-card"><h2>🏥</h2><h3>Atención</h3><p>Seguimiento integral.</p></div>
     </div>
-
-    <div class="stat-card">
-        <h2>🏥</h2>
-        <h3>Atención</h3>
-        <p>Seguimiento completo de tus consultas.</p>
-    </div>
-
-</div>
 
     <h1>Mis Citas</h1>
 
@@ -85,98 +78,57 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        <tbody id="tablaCitas">
-        </tbody>
+        <tbody id="tablaCitas"></tbody>
     </table>
 
     <div id="sinCitas" class="empty-state" style="display:none;">
-
-    <img
-        src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png"
-        alt="Sin citas">
-
-    <h3>No tienes citas programadas</h3>
-
-    <p>
-        Agenda una nueva consulta médica para comenzar.
-    </p>
-
-</div>
-
-<div class="info-medica">
-
-    <h3>Información importante para tu consulta</h3>
-
-    <ul>
-        <li>✔ Presentarse 15 minutos antes de la cita.</li>
-        <li>✔ Llevar documento de identidad.</li>
-        <li>✔ Revisar el estado de la cita periódicamente.</li>
-        <li>✔ En caso de no asistir, cancelar la cita con anticipación.</li>
-    </ul>
-
-</div>
-
-<div class="servicios-medicos">
-
-    <h2>Nuestros Servicios</h2>
-
-    <div class="servicios-grid">
-
-        <div class="servicio-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" alt="">
-            <h3>Cardiología</h3>
-            <p>Evaluación y control cardiovascular.</p>
-        </div>
-
-        <div class="servicio-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="">
-            <h3>Pediatría</h3>
-            <p>Atención especializada para niños.</p>
-        </div>
-
-        <div class="servicio-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/2785/2785482.png" alt="">
-            <h3>Dermatología</h3>
-            <p>Cuidado y tratamiento de la piel.</p>
-        </div>
-
-        <div class="servicio-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="">
-            <h3>Medicina General</h3>
-            <p>Atención médica integral.</p>
-        </div>
-
+        <img src="https://cdn-icons-png.flaticon.com/512/6134/6134065.png" alt="Sin citas">
+        <h3>No tienes citas programadas</h3>
+        <p>Agenda una nueva consulta médica para comenzar.</p>
     </div>
 
+    <div class="info-medica">
+        <h3>Información importante para tu consulta</h3>
+        <ul>
+            <li>✔ Presentarse 15 minutos antes de la cita.</li>
+            <li>✔ Llevar documento de identidad.</li>
+            <li>✔ En caso de no asistir, cancele o reprograme con anticipación.</li>
+        </ul>
+    </div>
 </div>
 
-</div>
-
-<!-- DETALLE DE CITA -->
 <div class="container" id="detalleCita" style="display:none;">
-
     <h1>Detalle de Cita</h1>
-
     <p><strong>Paciente:</strong> <span id="detallePaciente"></span></p>
     <p><strong>Médico:</strong> <span id="detalleMedico"></span></p>
     <p><strong>Especialidad:</strong> <span id="detalleEspecialidad"></span></p>
-    <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
-    <p><strong>Hora:</strong> <span id="detalleHora"></span></p>
+    <p><strong>Fecha Actual:</strong> <span id="detalleFecha"></span></p>
+    <p><strong>Hora Actual:</strong> <span id="detalleHora"></span></p>
     <p><strong>Estado:</strong> <span id="detalleEstado"></span></p>
-    <p id="detalleMotivo" style="display:none;"><strong>Motivo:</strong> <span id="detalleMotivoText"></span></p>
+    <p id="detalleMotivo" style="display:none;"><strong>Motivo Cancelación:</strong> <span id="detalleMotivoText"></span></p>
 
-    <div class="acciones">
-        <button class="btn-danger" onclick="mostrarCancelar()">Cancelar Cita</button>
-        <button onclick="volverMisCitas()">Volver</button>
+    <div id="areaReprogramar" class="reprogramar-container" style="display: none;">
+        <h3><i class="fa-solid fa-calendar-day"></i> Modificar Fecha y Bloque de Horario</h3>
+        <label>Selecciona la Nueva Fecha:</label>
+        <input type="date" id="nuevaFecha" class="input-fecha-repro" onchange="cargarHorariosReprogramacion()">
+        
+        <label style="margin-top: 10px;">Selecciona el Nuevo Horario disponible:</label>
+        <div class="grid-horarios-repro" id="contenedorHorariosRepro"></div>
+        
+        <button class="btn-warning" style="margin-top: 15px; padding: 12px; border: none; border-radius: 8px; cursor: pointer;" onclick="confirmarReprogramacion()">
+            Confirmar Cambios de Reprogramación
+        </button>
     </div>
 
+    <div class="acciones" style="margin-top: 20px;">
+        <button id="btnIrCancelar" class="btn-danger" onclick="mostrarCancelar()">Cancelar Cita</button>
+        <button id="btnIrReprogramar" class="btn-warning" onclick="activarPanelReprogramar()">Reprogramar Cita</button>
+        <button onclick="volverMisCitas()">Volver</button>
+    </div>
 </div>
 
-<!-- CANCELAR CITA -->
 <div class="container" id="cancelarCita" style="display:none;">
-
     <h1>Cancelar Cita</h1>
-
     <label><strong>Motivo (Opcional)</strong></label>
     <textarea id="motivoCancelacion" rows="4" placeholder="Escriba el motivo de la cancelación"></textarea>
 
@@ -184,24 +136,36 @@
         <button class="btn-danger" onclick="confirmarCancelacion()">Confirmar Cancelación</button>
         <button onclick="volverDetalle()">Volver</button>
     </div>
-
 </div>
 
 </div>
 
 <script>
-const todasLasCitas = JSON.parse(localStorage.getItem('citas') || '[]');
+// Base de datos de médicos fija para validar turnos
+const medicosDB = [
+    { nombre: "Dr. Pérez", id: 1 }, { nombre: "Dra. Gómez", id: 2 },
+    { nombre: "Dr. Morales", id: 3 }, { nombre: "Dra. Sánchez", id: 4 },
+    { nombre: "Dr. Rodríguez", id: 5 }, { nombre: "Dra. Ruiz", id: 6 },
+    { nombre: "Dra. Fernández", id: 7 }, { nombre: "Dr. Torres", id: 8 },
+    { nombre: "Dra. Álvarez", id: 9 }, { nombre: "Dr. Castillo", id: 10 },
+    { nombre: "Dr. López", id: 11 }, { nombre: "Dra. Martínez", id: 12 },
+    { nombre: "Dr. Herrera", id: 13 }
+];
+
+const horasManana = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"];
+const horasTarde  = ["14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"];
+
+let todasLasCitas = JSON.parse(localStorage.getItem('citas') || '[]');
 const dniActual = localStorage.getItem('dni');
-const citas = todasLasCitas.filter(c => c.dni === dniActual);
-let citaSeleccionada = null;
-let justCancelled = false;
+let citas = todasLasCitas.filter(c => c.dni === dniActual);
+let citaSeleccionadaIndex = null; 
+let horaReproSeleccionada = "";
 
 function guardarCitas() {
-    const todasLasCitas = JSON.parse(localStorage.getItem('citas') || '[]');
-    const dniActual = localStorage.getItem('dni');
-    const citasOtros = todasLasCitas.filter(c => c.dni !== dniActual);
-    const citasActualizadas = [...citasOtros, ...citas];
-    localStorage.setItem('citas', JSON.stringify(citasActualizadas));
+    const todas = JSON.parse(localStorage.getItem('citas') || '[]');
+    const deOtros = todas.filter(c => c.dni !== dniActual);
+    const combinadas = [...deOtros, ...citas];
+    localStorage.setItem('citas', JSON.stringify(combinadas));
 }
 
 function estadoClass(estado) {
@@ -213,7 +177,6 @@ function estadoClass(estado) {
 function mostrarCitas() {
     const tbody = document.getElementById('tablaCitas');
     const sinCitas = document.getElementById('sinCitas');
-
     tbody.innerHTML = '';
 
     if (citas.length === 0) {
@@ -239,58 +202,135 @@ function mostrarCitas() {
 }
 
 function mostrarDetalle(index) {
-    citaSeleccionada = index;
+    citaSeleccionadaIndex = index;
     const cita = citas[index];
     if (!cita) return;
 
-    const nombrePaciente = localStorage.getItem('nombre') || 'Paciente';
-    document.getElementById('detallePaciente').textContent = nombrePaciente;
+    document.getElementById('detallePaciente').textContent = localStorage.getItem('nombre') || 'Paciente';
     document.getElementById('detalleMedico').textContent = cita.medico;
     document.getElementById('detalleEspecialidad').textContent = cita.especialidad;
     document.getElementById('detalleFecha').textContent = cita.fecha;
     document.getElementById('detalleHora').textContent = cita.hora;
     document.getElementById('detalleEstado').textContent = cita.estado;
-    // mostrar motivo si existe y la cita está cancelada
+
+    // Control de visibilidad del motivo de cancelación
     const motivoEl = document.getElementById('detalleMotivo');
-    const motivoText = document.getElementById('detalleMotivoText');
-    if (cita.estado === 'Cancelada' && cita.motivo) {
-        motivoText.textContent = cita.motivo;
+    if (cita.estado === 'Cancelada') {
+        document.getElementById('detalleMotivoText').textContent = cita.motivo || 'Sin especificar';
         motivoEl.style.display = 'block';
+        document.getElementById('btnIrCancelar').style.display = 'none';
+        document.getElementById('btnIrReprogramar').style.display = 'none';
     } else {
-        motivoText.textContent = '';
         motivoEl.style.display = 'none';
+        document.getElementById('btnIrCancelar').style.display = 'inline-block';
+        document.getElementById('btnIrReprogramar').style.display = 'inline-block';
     }
+
+    // Resetear el panel de reprogramar
+    document.getElementById('areaReprogramar').style.display = 'none';
+    document.getElementById('nuevaFecha').value = '';
+    document.getElementById('contenedorHorariosRepro').innerHTML = '';
+    horaReproSeleccionada = "";
 
     document.getElementById('misCitas').style.display = 'none';
     document.getElementById('detalleCita').style.display = 'block';
-    document.getElementById('cancelarCita').style.display = 'none';
+}
+
+function activarPanelReprogramar() {
+    document.getElementById('areaReprogramar').style.display = 'block';
+}
+
+function cargarHorariosReprogramacion() {
+    const contenedor = document.getElementById('contenedorHorariosRepro');
+    const fechaElegida = document.getElementById('nuevaFecha').value;
+    if (!fechaElegida) return;
+
+    contenedor.innerHTML = "";
+    const citaActual = citas[citaSeleccionadaIndex];
+    
+    // Buscar médico para determinar sus bloques (mañana/tarde)
+    const medicoEncontrado = medicosDB.find(m => m.nombre === citaActual.medico);
+    const idMedico = medicoEncontrado ? medicoEncontrado.id : 1;
+    const rangoHoras = (idMedico % 2 !== 0) ? horasManana : horasTarde;
+
+    // Obtener todas las citas globales de localStorage para control de traslapes médicos
+    const globales = JSON.parse(localStorage.getItem('citas') || '[]');
+
+    rangoHoras.forEach(h => {
+        let divHora = document.createElement("div");
+        divHora.className = "bloque-hora-repro";
+        divHora.textContent = h;
+
+        // Validar si el médico ya está ocupado ese día a esa hora por OTRA cita (excluyendo la actual)
+        const ocupado = globales.some(c => c.fecha === fechaElegida && c.hora === h && c.medico === citaActual.medico && !(c.dni === dniActual && c.fecha === citaActual.fecha && c.hora === citaActual.hora));
+        
+        if (ocupado) {
+            divHora.style.opacity = "0.4";
+            divHora.style.cursor = "not-allowed";
+            divHora.title = "Horario ya reservado";
+        } else {
+            divHora.onclick = () => {
+                document.querySelectorAll(".bloque-hora-repro").forEach(b => b.classList.remove("activo"));
+                divHora.classList.add("activo");
+                horaReproSeleccionada = h;
+            };
+        }
+        contenedor.appendChild(divHora);
+    });
+}
+
+function confirmarReprogramacion() {
+    const nuevaFecha = document.getElementById('nuevaFecha').value;
+    if (!nuevaFecha || !horaReproSeleccionada) {
+        alert("Seleccione una fecha válida y un bloque de horario.");
+        return;
+    }
+
+    const hoy = new Date();
+    if (new Date(nuevaFecha) < hoy.setHours(0,0,0,0)) {
+        alert("No puede reprogramar para una fecha pasada.");
+        return;
+    }
+
+    // Validar límite de traslapes del propio usuario
+    const otraCitaMismaHora = citas.some((c, idx) => idx !== citaSeleccionadaIndex && c.fecha === nuevaFecha && c.hora === horaReproSeleccionada);
+    if (otraCitaMismaHora) {
+        alert("Ya posees otra cita agendada para este mismo bloque de tiempo.");
+        return;
+    }
+
+    // Efectuar cambios
+    citas[citaSeleccionadaIndex].fecha = nuevaFecha;
+    citas[citaSeleccionadaIndex].hora = horaReproSeleccionada;
+    citas[citaSeleccionadaIndex].estado = 'Programada'; // Si estaba por vencer, se reestablece
+
+    guardarCitas();
+    mostrarCitas();
+    alert("¡Cita reprogramada exitosamente!");
+    volverMisCitas();
 }
 
 function mostrarCancelar() {
-    if (citaSeleccionada === null) return;
-    const cita = citas[citaSeleccionada];
-    if (!cita) return;
-    if (cita.estado === 'Cancelada') {
-        alert('Esta cita ya fue cancelada');
-        return;
-    }
-    const confirmar = confirm('¿Está seguro de que desea cancelar esta cita? Esta acción no se puede deshacer.');
-    if (!confirmar) return;
-    // limpiar motivo previo y mostrar formulario de cancelación
-    const motivoEl = document.getElementById('motivoCancelacion');
-    if (motivoEl) motivoEl.value = '';
+    if (citaSeleccionadaIndex === null) return;
     document.getElementById('detalleCita').style.display = 'none';
     document.getElementById('cancelarCita').style.display = 'block';
+}
+
+function confirmarCancelacion() {
+    const motivo = document.getElementById('motivoCancelacion').value.trim();
+    citas[citaSeleccionadaIndex].estado = 'Cancelada';
+    citas[citaSeleccionadaIndex].motivo = motivo || 'Cancelada por el usuario';
+    
+    guardarCitas();
+    mostrarCitas();
+    alert('Cita cancelada correctamente');
+    volverMisCitas();
 }
 
 function volverMisCitas() {
     document.getElementById('detalleCita').style.display = 'none';
     document.getElementById('cancelarCita').style.display = 'none';
     document.getElementById('misCitas').style.display = 'block';
-    if (justCancelled) {
-        alert('Esta cita fue cancelada');
-        justCancelled = false;
-    }
 }
 
 function volverDetalle() {
@@ -298,54 +338,24 @@ function volverDetalle() {
     document.getElementById('detalleCita').style.display = 'block';
 }
 
-function confirmarCancelacion() {
-    if (citaSeleccionada === null) return;
-    const cita = citas[citaSeleccionada];
-    if (!cita) return;
-    if (cita.estado === 'Cancelada') {
-        alert('Esta cita ya fue cancelada');
-        // regresar al detalle sin hacer cambios
-        volverDetalle();
-        return;
-    }
-    const motivo = document.getElementById('motivoCancelacion').value.trim();
-    citas[citaSeleccionada].estado = 'Cancelada';
-    citas[citaSeleccionada].motivo = motivo;
-    guardarCitas();
-    mostrarCitas();
-    alert('Cita cancelada exitosamente');
-    justCancelled = true;
-    volverMisCitas();
-}
-
-mostrarCitas();
-</script>
-<script>
-// Función para destruir los datos de sesión correctamente
 function cerrarSesion() {
     localStorage.removeItem("logueado");
     localStorage.removeItem("dni");
     localStorage.removeItem("nombre");
-    
-    // Te mandamos de regreso a la página de inicio de sesión
     window.location.href = "perfil.html"; 
 }
 
-// Función para actualizar SOLO los botones de la barra superior
 function updateUI() {
     const perfilLink = document.getElementById("linkPerfil");
     const logoutLink = document.getElementById("linkSalir");
-    
     const logged = localStorage.getItem("logueado") === "si";
 
-    // Ocultar o Mostrar la personita y el botón de salir
     if (perfilLink) perfilLink.style.display = logged ? "none" : "inline-block";
     if (logoutLink) logoutLink.style.display = logged ? "inline-block" : "none";
 }
 
-// Ejecutamos la función apenas cargue la página
+mostrarCitas();
 updateUI();
 </script>
-
 </body>
 </html>
