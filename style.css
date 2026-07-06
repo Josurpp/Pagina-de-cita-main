@@ -52,7 +52,15 @@ body {
     font-size: 18px;
     font-weight: 600;
 }
-
+.brand-moderna .brand-logo {
+    width: 90px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 8px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
+}
 /* Configuración de los contenedores de navegación */
 .sidebar-moderna nav,
 .bottom-nav-moderna {

@@ -12,8 +12,7 @@
 <body>
 <aside class="sidebar-moderna">
     <div class="brand-moderna">
-        <i class="fa-solid fa-notes-medical logo-icon"></i>
-        <h2>Cita</h2>
+        <img src="imagenes/logo.png" alt="Logo de citas" class="brand-logo">
     </div>
 
     <nav class="main-nav-moderna">
@@ -208,6 +207,9 @@ function actualizarHorariosDisponibles() {
     if (!varMedicoSeleccionado) return;
     
     contenedorHorarios.innerHTML = "";
+    varHoraSeleccionada = "";
+
+    const citasGuardadas = JSON.parse(localStorage.getItem("citas") || "[]");
     
     // Formatear cabecera de disponibilidad
     if (fechaInput) {
@@ -223,15 +225,23 @@ function actualizarHorariosDisponibles() {
     let listaHoras = (varMedicoSeleccionado.id % 2 !== 0) ? horariosManana : horariosTarde;
 
     listaHoras.forEach(hora => {
-        let botonHora = document.createElement("div");
+        const ocupada = citasGuardadas.some(c => c.fecha === fechaInput && c.hora === hora && c.medico === varMedicoSeleccionado.nombre);
+        let botonHora = document.createElement("button");
+        botonHora.type = "button";
         botonHora.className = "bloque-hora";
         botonHora.textContent = hora;
         
-        botonHora.onclick = () => {
-            document.querySelectorAll(".bloque-hora").forEach(b => b.classList.remove("activo"));
-            botonHora.classList.add("activo");
-            varHoraSeleccionada = hora;
-        };
+        if (ocupada) {
+            botonHora.classList.add("ocupado");
+            botonHora.disabled = true;
+            botonHora.title = "Horario ocupado";
+        } else {
+            botonHora.onclick = () => {
+                document.querySelectorAll(".bloque-hora").forEach(b => b.classList.remove("activo"));
+                botonHora.classList.add("activo");
+                varHoraSeleccionada = hora;
+            };
+        }
         
         contenedorHorarios.appendChild(botonHora);
     });

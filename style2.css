@@ -104,6 +104,15 @@
             background: #f1f5f9;
         }
 
+        .bloque-hora:disabled,
+        .bloque-hora.ocupado {
+            background: #e2e8f0;
+            color: #64748b;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
         .bloque-hora.activo {
             background: #002b5e;
             color: #ffffff;
